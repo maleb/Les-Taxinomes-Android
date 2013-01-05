@@ -18,14 +18,14 @@ public class SplashActivity extends Activity {
 
 	/**
 	 * Handler to close this activity and to start automatically
-	 * {@link MainActivity} after <code>SPLASHTIME</code> seconds.
+	 * {@link ConsultationActivity} after <code>SPLASHTIME</code> seconds.
 	 */
 	private final transient Handler splashHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			if (msg.what == STOPSPLASH) {
 				final Intent intent = new Intent(SplashActivity.this,
-						MainActivity.class);
+						ConsultationActivity.class);
 				startActivity(intent);
 				finish();
 			}

@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="org.lestaxinomes.les_taxinomes_android.activities.MainActivity" >
+        <activity android:name="org.lestaxinomes.les_taxinomes_android.activities.ConsultationActivity" >
         </activity>
     </application>
 
