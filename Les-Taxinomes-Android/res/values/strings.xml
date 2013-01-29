@@ -4,5 +4,8 @@
     <string name="app_name">Les Taxinomes</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="image">image</string>
+    <string name="of">de</string>
+    <string name="map_filter">Carte</string>
 
 </resources>

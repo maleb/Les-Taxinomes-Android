@@ -4,36 +4,59 @@ import org.lestaxinomes.les_taxinomes_android.R;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableMediaView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.TextView;
 
 public class MediaFragment extends BaseFragment {
 
+	public static MediaFragment newInstance(int index, int mediaId) {
+		MediaFragment f = new MediaFragment();
+
+		// Supply index input as an argument.
+		Bundle args = new Bundle();
+		args.putInt("index", index);
+		args.putInt("mediaId", mediaId);
+		f.setArguments(args);
+
+		return f;
+	}
+
+	public int getShownIndex() {
+		return getArguments().getInt("index", 0);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.media_fragment, container, false);
-		
+
 		Integer mediaId = 1;
+
+		Intent intent = getActivity().getIntent();
+
+		if (this.getArguments() != null) {
+			if (this.getArguments().get("mediaId") != null
+					&& this.getArguments().get("mediaId").toString() != "") {
+				mediaId = Integer.parseInt(this.getArguments().get("mediaId")
+						.toString());
+			}
+		}
+		if (intent.getStringExtra("mediaId") != null) {
+			mediaId = Integer.parseInt(intent.getStringExtra("mediaId"));
+		}
 
 		MediaModel mediaModel = new MediaModel(mediaId);
 
-		TextView titleView = (TextView) view.findViewById(R.id.mediaTitleView);
-		TextView descriptionView = (TextView) view.findViewById(R.id.mediaDescriptionView);
-		WebView imageView = (WebView) view.findViewById(R.id.mediaImageView);
-		UpdatableMediaView utv = new UpdatableMediaView(mediaModel, titleView, imageView, descriptionView);
+		UpdatableMediaView utv = new UpdatableMediaView(mediaModel, view);
 		mediaModel.addView(utv);
 
-		mediaModel.readMedia();
+		mediaModel.loadMedia();
 
 		return view;
 	}
-
 
 }

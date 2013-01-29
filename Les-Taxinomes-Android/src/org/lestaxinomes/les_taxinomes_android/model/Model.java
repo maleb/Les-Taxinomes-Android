@@ -3,6 +3,8 @@ package org.lestaxinomes.les_taxinomes_android.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lestaxinomes.les_taxinomes_android.dataConnexion.ConnexionManager;
+import org.lestaxinomes.les_taxinomes_android.dataConnexion.XMLRPCConnexionManager;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
 
 public abstract class Model {

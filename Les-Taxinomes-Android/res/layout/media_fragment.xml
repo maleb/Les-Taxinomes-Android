@@ -9,16 +9,59 @@
         android:id="@+id/mediaTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    
-    
-      <WebView
+
+    <ImageView
         android:id="@+id/mediaImageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/image"
+        android:scaleType="center" />
+
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/mediaAvatarView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/image"
+            android:scaleType="centerCrop"
+             />
+
+        <TextView
+            android:id="@+id/mediaAuthorView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mediaAvatarView" />
+        
+        
+        <TextView
+            android:id="@+id/mediaDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mediaAvatarView" 
+            android:layout_below="@id/mediaAuthorView"/>
+        
+         <TextView
+            android:id="@+id/mediaVisitesView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/mediaAvatarView" 
+            android:layout_below="@id/mediaDateView"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/mediaDescriptionView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    
+    
+    <org.osmdroid.views.MapView
+        android:id="@+id/mediaMapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_margin="20dip"
+        android:layout_weight="1"
+        android:clickable="true" 
+        />
 
 </LinearLayout>
