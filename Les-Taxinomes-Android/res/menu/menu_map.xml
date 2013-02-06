@@ -5,11 +5,14 @@
      <item
         android:id="@+id/medialist"
         android:showAsAction="ifRoom"
-        android:title="@string/medialist"/>
+        android:title="@string/medialist"
+        android:icon="@drawable/media30x30_gold"
+        />
 
     <item
         android:id="@+id/map_loadmore"
         android:showAsAction="ifRoom"
-        android:title="@string/map_loadmore"/>
+        android:title="@string/map_loadmore"        
+        android:icon="@drawable/rafraichir20x20_blanc"/>
 
 </menu>

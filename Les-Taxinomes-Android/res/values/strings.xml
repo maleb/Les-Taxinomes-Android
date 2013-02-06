@@ -7,12 +7,12 @@
     <string name="image">image</string>
     <string name="of">de</string>
     <string name="map_filter">Carte</string>
-    <string name="map_loadmore">Load more</string>
-    <string name="my_account">Mon compte</string>
+    <string name="map_loadmore">Voir plus de médias</string>
+    <string name="my_account">Mon espace</string>
     <string name="login">Login</string>
     <string name="logout">Déconnexion</string>
     <string name="password">Mot de passe</string>
-    <string name="medialist">Liste</string>
+    <string name="medialist">Collecte</string>
     <string name="publishMedia">Publier un média</string>
     <string name="publish">Publier</string>
     <string name="title">Titre</string>

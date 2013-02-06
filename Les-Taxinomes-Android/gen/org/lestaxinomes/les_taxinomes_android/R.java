@@ -14,8 +14,34 @@ public final class R {
         public static final int gold=0x7f040000;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int splash=0x7f020001;
+        public static final int carte20x20_blanc=0x7f020000;
+        public static final int carte20x20_gold=0x7f020001;
+        public static final int carte30x30_blanc=0x7f020002;
+        public static final int carte30x30_gold=0x7f020003;
+        public static final int home20x20_blanc=0x7f020004;
+        public static final int home20x20_gold=0x7f020005;
+        public static final int home30x30_blanc=0x7f020006;
+        public static final int home30x30_gold=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int info20x20=0x7f020009;
+        public static final int info30x30=0x7f02000a;
+        public static final int lignes20x20_blanc=0x7f02000b;
+        public static final int media20x20_blanc=0x7f02000c;
+        public static final int media20x20_gold=0x7f02000d;
+        public static final int media30x30_blanc=0x7f02000e;
+        public static final int media30x30_gold=0x7f02000f;
+        public static final int monespace20x20_blanc=0x7f020010;
+        public static final int monespace20x20_gold=0x7f020011;
+        public static final int monespace30x30_blanc=0x7f020012;
+        public static final int monespace30x30_gold=0x7f020013;
+        public static final int mosaik20x20_blanc=0x7f020014;
+        public static final int oeil20x20_blanc=0x7f020015;
+        public static final int rafraichir20x20_blanc=0x7f020016;
+        public static final int seconnecter20x20blanc=0x7f020017;
+        public static final int seconnecter20x20gold=0x7f020018;
+        public static final int seconnecter30x30blanc=0x7f020019;
+        public static final int seconnecter30x30gold=0x7f02001a;
+        public static final int splash=0x7f02001b;
     }
     public static final class id {
         public static final int details=0x7f080001;
