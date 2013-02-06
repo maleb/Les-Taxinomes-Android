@@ -8,6 +8,7 @@ import org.lestaxinomes.les_taxinomes_android.dataConnexion.XMLRPCConnexionManag
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
 
 public abstract class Model {
+	
 
 	List<UpdatableView> views = new ArrayList<UpdatableView>();
 
@@ -33,5 +34,6 @@ public abstract class Model {
 	public void addView(UpdatableView view) {
 		views.add(view);
 	}
+
 
 }

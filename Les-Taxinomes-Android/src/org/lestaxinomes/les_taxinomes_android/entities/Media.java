@@ -13,6 +13,15 @@ public class Media {
 	private Date modificationDate;
 	private Integer visites;
 	private GIS gis;
+	private Integer licenceId;
+
+	public Integer getLicenceId() {
+		return licenceId;
+	}
+
+	public void setLicenceId(Integer licenceId) {
+		this.licenceId = licenceId;
+	}
 
 	public String getDescription() {
 		return description;

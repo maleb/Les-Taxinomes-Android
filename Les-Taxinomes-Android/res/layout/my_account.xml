@@ -1,0 +1,26 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <!-- Email Label -->
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textColor="#372c24" />
+    
+    	<Button android:layout_width="match_parent" android:id="@+id/logoutbutton"
+		android:text="@string/logout" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" android:layout_height="40dp" />
+    	
+    	<Button android:layout_width="match_parent" android:id="@+id/publicationbutton"
+		android:text="@string/publishMedia" android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp" android:layout_height="40dp" />
+
+
+
+</LinearLayout>

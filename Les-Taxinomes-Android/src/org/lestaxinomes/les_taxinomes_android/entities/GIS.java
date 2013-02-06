@@ -21,4 +21,5 @@ public class GIS {
 		this.latitude = latitude;
 	}
 
+
 }

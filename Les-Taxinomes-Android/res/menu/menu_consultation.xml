@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+     <item
+        android:id="@+id/medialist"
+        android:showAsAction="always"
+        android:title="@string/medialist"/>
 
     <item
         android:id="@+id/map_filter"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/map_filter"/>
+    
+      <item
+        android:id="@+id/my_account"
+        android:showAsAction="always"
+        android:title="@string/my_account"/>
+      
+       <!-- <item
+        android:id="@+id/image_pick"
+        android:showAsAction="always"
+        android:title="Photo"/> -->
 
 </menu>

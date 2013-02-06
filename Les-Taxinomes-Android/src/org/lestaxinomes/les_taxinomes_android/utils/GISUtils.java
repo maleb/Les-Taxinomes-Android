@@ -1,8 +1,10 @@
 package org.lestaxinomes.les_taxinomes_android.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lestaxinomes.les_taxinomes_android.activities.MapActivity;
+import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.fragments.MediaListFragment.MediaActivity;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
@@ -16,16 +18,28 @@ import android.content.Intent;
 
 public class GISUtils {
 
-	public static void addPOI(final MapView mapView, String mediaId,
-			String title, String description, final Double latitude,
-			final Double longitude) {
+	public static void removePOIs(final MapView mapView) {
 
-		GeoPoint mediaLocalisation = new GeoPoint(latitude, longitude);
+		mapView.getOverlayManager().clear();
+
+	}
+
+	public static void setMediaListOnMapView(List<Media> mediaList,
+			final MapView mapView) {
 
 		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-		OverlayItem item = new OverlayItem(mediaId, title, description,
-				mediaLocalisation);
-		items.add(item);
+
+		if (mediaList != null) {
+			for (Media media : mediaList) {
+				GeoPoint mediaLocalisation = new GeoPoint(media.getGis()
+						.getLatitude(), media.getGis().getLongitude());
+				String id = (media.getId() == null ? "" : media.getId()
+						.toString());
+				OverlayItem item = new OverlayItem(id, media.getTitre(),
+						media.getDescription(), mediaLocalisation);
+				items.add(item);
+			}
+		}
 
 		ResourceProxy resourceProxy = new DefaultResourceProxyImpl(
 				mapView.getContext());
@@ -52,8 +66,10 @@ public class GISUtils {
 								else {
 									final Intent intent = new Intent(mapView
 											.getContext(), MapActivity.class);
-									intent.putExtra("lon", longitude.toString());
-									intent.putExtra("lat", latitude.toString());
+									intent.putExtra("lon",
+											item.mGeoPoint.getLongitudeE6());
+									intent.putExtra("lat",
+											item.mGeoPoint.getLatitudeE6());
 									((Activity) mapView.getContext())
 											.startActivity(intent);
 									((Activity) mapView.getContext()).finish();

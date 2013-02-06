@@ -1,0 +1,11 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <fragment
+        android:id="@+id/publicationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="org.lestaxinomes.les_taxinomes_android.fragments.PublicationFragment" />
+
+</FrameLayout>

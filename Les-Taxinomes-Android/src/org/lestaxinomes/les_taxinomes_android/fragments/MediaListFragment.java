@@ -53,7 +53,7 @@ public class MediaListFragment extends BaseListFragment {
 				.show();
 
 		Map<String, String> criteres = new HashMap<String, String>();
-		criteres.put("tri", "date_modif");
+		criteres.put("tri", "date DESC");
 		criteres.put("vignette_format","carre" );
 		MediaListModel mlm = new MediaListModel(criteres);
 

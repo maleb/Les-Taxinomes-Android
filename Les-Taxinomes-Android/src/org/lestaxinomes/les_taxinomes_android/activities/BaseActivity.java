@@ -2,7 +2,6 @@ package org.lestaxinomes.les_taxinomes_android.activities;
 
 import org.lestaxinomes.les_taxinomes_android.R;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -11,6 +10,7 @@ import android.view.MenuItem;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 public class BaseActivity extends FragmentActivity {
+	
 
 	private int widthOfView;
 
@@ -54,6 +54,18 @@ public class BaseActivity extends FragmentActivity {
 			Intent intent = new Intent(this, ConsultationActivity.class);
 			startActivity(intent);
 			return true;
+		case R.id.medialist:
+			Intent intent3 = new Intent(this, ConsultationActivity.class);
+			startActivity(intent3);
+			return true;
+		case R.id.my_account:
+			Intent intent2 = new Intent(this, Login.class);
+			startActivity(intent2);
+			return true;
+//		case R.id.image_pick:
+//			Intent intent4 = new Intent(this, ImagePickActivity.class);
+//			startActivity(intent4);
+//			return true;
 		case R.id.map_filter:
 			openMapFilter();
 			return true;
@@ -69,5 +81,6 @@ public class BaseActivity extends FragmentActivity {
 	public void setWidthOfView(int widthOfView) {
 		this.widthOfView = widthOfView;
 	}
+
 
 }

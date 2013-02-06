@@ -4,9 +4,12 @@ import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
 
 public class MediaModel extends Model {
+	
 
 	private Media media;
 	private AuthorModel authorModel;
+	
+	
 
 	public MediaModel(Integer mediaId) {
 		this.authorModel = new AuthorModel();

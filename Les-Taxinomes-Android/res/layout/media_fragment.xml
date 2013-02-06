@@ -57,7 +57,7 @@
     
     <org.osmdroid.views.MapView
         android:id="@+id/mediaMapView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dip"
         android:layout_margin="20dip"
         android:layout_weight="1"

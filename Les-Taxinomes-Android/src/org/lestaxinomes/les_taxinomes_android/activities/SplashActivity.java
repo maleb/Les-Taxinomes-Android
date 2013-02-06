@@ -1,6 +1,7 @@
 package org.lestaxinomes.les_taxinomes_android.activities;
 
 import org.lestaxinomes.les_taxinomes_android.R;
+import org.lestaxinomes.les_taxinomes_android.views.UpdatableLicenceSingletonView;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -39,11 +40,12 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 
+		// load all the utils in the first activity
+		UpdatableLicenceSingletonView.getInstance().getLicences();
+
 		final Message msg = new Message();
 		msg.what = STOPSPLASH;
 		splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 	}
-	
-	
-	
+
 }
