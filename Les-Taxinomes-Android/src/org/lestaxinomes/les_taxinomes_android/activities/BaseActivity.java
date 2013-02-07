@@ -62,10 +62,10 @@ public class BaseActivity extends FragmentActivity {
 			Intent intent2 = new Intent(this, Login.class);
 			startActivity(intent2);
 			return true;
-//		case R.id.image_pick:
-//			Intent intent4 = new Intent(this, ImagePickActivity.class);
-//			startActivity(intent4);
-//			return true;
+		case R.id.takephoto:
+			Intent intent4 = new Intent(this, ImagePickActivity.class);
+			startActivity(intent4);
+			return true;
 		case R.id.map_filter:
 			openMapFilter();
 			return true;

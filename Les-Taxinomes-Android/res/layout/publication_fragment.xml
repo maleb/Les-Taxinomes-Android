@@ -8,13 +8,19 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
         <ImageView
             android:id="@+id/result"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/image" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/image"
+            android:scaleType="fitStart" />
 
         <TextView
             android:id="@+id/textViewPublicationTitle"
@@ -28,8 +34,6 @@
             android:id="@+id/publicationTitle"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:inputType="text"
             android:textStyle="normal"
             android:typeface="sans" >
@@ -41,88 +45,76 @@
             android:id="@+id/textViewPublicationDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:text="@string/description" />
 
         <EditText
             android:id="@+id/publicationDescription"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="200dp"
             android:inputType="text"
             android:textStyle="normal"
             android:typeface="sans" />
-        
-          <org.osmdroid.views.MapView
-        android:id="@+id/publicationMapView"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_margin="20dip"
-        android:layout_weight="1"
-        android:clickable="false" 
-        />
-        
-        
-         <TextView
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/publicationMapView"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_margin="20dip"
+            android:layout_weight="1"
+            android:clickable="false" 
+            android:visibility="gone"/>
+
+        <TextView
             android:id="@+id/publicationDocUri"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            />
-         
-             <TextView
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/publicationLat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            />
-             
-                 <TextView
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/publicationLon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            />
-         
-           <TextView
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/publicationLicenceId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:text="init"
-            />
-         
-          <Spinner
-        android:id="@+id/licenceSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-        
-          <Button
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/licenceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/loadLocationbutton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="@string/loadLocation"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/publishbutton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:text="@string/publish" />
-        
+
         <TextView
             android:id="@+id/publicationPleaseWait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pleaseWait"
-            android:visibility="invisible"
-            />
+            android:visibility="gone" />
     </LinearLayout>
 
 </ScrollView>

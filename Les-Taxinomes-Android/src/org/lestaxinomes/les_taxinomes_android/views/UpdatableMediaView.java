@@ -12,15 +12,10 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.utils.GISUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.xmlpull.v1.XmlPullParser;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.util.AttributeSet;
-import android.util.Xml;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -31,6 +26,7 @@ public class UpdatableMediaView implements UpdatableView {
 	private MediaModel mediaModel;
 
 	private TextView titleView;
+	private TextView licenceView;
 	private UpdatableImageView imageView;
 	private TextView descriptionView;
 	private UpdatableAuthorView authorView;
@@ -46,6 +42,7 @@ public class UpdatableMediaView implements UpdatableView {
 				.findViewById(R.id.mediaDescriptionView);
 		dateView = (TextView) view.findViewById(R.id.mediaDateView);
 		visitesView = (TextView) view.findViewById(R.id.mediaVisitesView);
+		licenceView = (TextView) view.findViewById(R.id.mediaLicenceView);
 
 		// mapView
 		mapView = (MapView) view.findViewById(R.id.mediaMapView);
@@ -74,6 +71,12 @@ public class UpdatableMediaView implements UpdatableView {
 	public void update() {
 		titleView.setText(mediaModel.getMedia().getTitre());
 		descriptionView.setText(mediaModel.getMedia().getDescription());
+
+		if (mediaModel.getMedia().getLicenceId() != null) {
+
+			licenceView.setText(UpdatableLicenceSingletonView
+					.getLicenceNameById(mediaModel.getMedia().getLicenceId()));
+		}
 
 		Integer nbVisites = mediaModel.getMedia().getVisites();
 
@@ -128,7 +131,7 @@ public class UpdatableMediaView implements UpdatableView {
 					.getLayoutParams();
 			params.width = LayoutParams.MATCH_PARENT;
 			this.mapView.setLayoutParams(params);
-			//reload view
+			// reload view
 			this.mapView.invalidate();
 		}
 

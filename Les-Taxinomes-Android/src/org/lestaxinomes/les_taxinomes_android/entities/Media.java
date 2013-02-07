@@ -9,11 +9,13 @@ public class Media {
 	private String titre;
 	private String description;
 	private String imageUrl;
+	private String vignetteUrl;
 	private List<Author> authors;
 	private Date modificationDate;
 	private Integer visites;
 	private GIS gis;
 	private Integer licenceId;
+	
 
 	public Integer getLicenceId() {
 		return licenceId;
@@ -85,6 +87,14 @@ public class Media {
 
 	public void setGis(GIS gis) {
 		this.gis = gis;
+	}
+
+	public String getVignetteUrl() {
+		return vignetteUrl;
+	}
+
+	public void setVignetteUrl(String vignetteUrl) {
+		this.vignetteUrl = vignetteUrl;
 	}
 
 }

@@ -48,8 +48,10 @@ public class MediaListFragment extends BaseListFragment {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.media_list_fragment, container,
 				false);
+		
+		
 
-		Toast.makeText(getActivity(), "chargement des médias", Toast.LENGTH_LONG)
+		Toast.makeText(getActivity(),getResources().getString(R.string.loadingMedia), Toast.LENGTH_LONG)
 				.show();
 
 		Map<String, String> criteres = new HashMap<String, String>();

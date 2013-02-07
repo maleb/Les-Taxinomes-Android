@@ -42,14 +42,6 @@ public class ImagePickActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-			// We need to recyle unused bitmaps
-			// if (bitmap != null) {
-			// bitmap.recycle();
-			// }
-			// InputStream stream = getContentResolver().openInputStream(
-			// data.getData());
-			// bitmap = BitmapFactory.decodeStream(stream);
-			// stream.close();
 
 			Intent intent = new Intent(ImagePickActivity.this,
 					PublicationActivity.class);
@@ -58,11 +50,6 @@ public class ImagePickActivity extends BaseActivity {
 					.getAbsolutePath() + "/tmpTaxinomes");
 			intent.putExtra("loadedImageUri", fi.getAbsolutePath());
 
-			// get the uri of the captured picture
-			// if (mCapturedImageURI != null) {
-
-			// }
-			// send it to the publication activity
 
 			startActivity(intent);
 			finish();

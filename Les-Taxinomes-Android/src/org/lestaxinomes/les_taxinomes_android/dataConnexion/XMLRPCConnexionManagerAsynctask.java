@@ -37,11 +37,11 @@ public class XMLRPCConnexionManagerAsynctask extends
 		AsyncTask<Model, Integer, Model> {
 
 	// real site
-	// private static final String serverURL =
-	// "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+	 private static final String serverURL =
+	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
 	// test site
-	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+//	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
 	private static Object XMLRPCCall(String fonction, Object criteres) {
 		Object res = null;
@@ -71,7 +71,8 @@ public class XMLRPCConnexionManagerAsynctask extends
 			media.setId(Integer.parseInt((String) callResult.get("id_article")));
 			media.setTitre((String) callResult.get("titre"));
 			media.setDescription((String) callResult.get("texte"));
-			media.setImageUrl((String) callResult.get("vignette"));
+			media.setImageUrl((String) callResult.get("document"));
+			media.setVignetteUrl((String) callResult.get("vignette"));
 			if (callResult.get("visites") != null) {
 				media.setVisites(Integer.parseInt((String) callResult
 						.get("visites")));
@@ -196,7 +197,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 	private Media readMedia(MediaModel mm) {
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_article", mm.getMedia().getId());
-		criteres.put("vignette_largeur", 400);
+		//criteres.put("vignette_largeur", 400);
 		// WindowManager wm = (WindowManager)
 		// .getSystemService(Context.WINDOW_SERVICE);
 		// Display display = wm.getDefaultDisplay();

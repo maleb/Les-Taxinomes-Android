@@ -226,7 +226,7 @@ public class PublicationFragment extends BaseFragment {
 			public void onClick(View v) {
 
 				Toast.makeText(getActivity(),
-						"chargement de votre localisation", Toast.LENGTH_LONG)
+						getResources().getString(R.string.loadingLocation), Toast.LENGTH_LONG)
 						.show();
 
 				// TODO store the lat and lon into something accessible in the

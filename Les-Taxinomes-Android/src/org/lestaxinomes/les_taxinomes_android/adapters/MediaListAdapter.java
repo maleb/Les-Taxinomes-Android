@@ -62,7 +62,7 @@ public class MediaListAdapter extends ArrayAdapter<Media> {
 
 		holder.author.setText(names);
 		holder.txtTitle.setText(rowItem.getTitre());
-		holder.updatableImageView.loadImage(rowItem.getImageUrl());
+		holder.updatableImageView.loadImage(rowItem.getVignetteUrl());
 
 		return convertView;
 	}

@@ -14,10 +14,15 @@
     <string name="password">Mot de passe</string>
     <string name="medialist">Collecte</string>
     <string name="publishMedia">Publier un média</string>
+    <string name="takephoto">Prendre une photo</string>
     <string name="publish">Publier</string>
+    <string name="publishby">Publié par</string>
     <string name="title">Titre</string>
     <string name="description">Description</string>
     <string name="pleaseWait">Veuillez patienter ...</string>
-      <string name="loadLocation">Charger ma localisation</string>
+    <string name="loadLocation">Charger ma localisation</string>
+      <string name="loadingLocation">Chargement de votre localisation</string>
+    <string name="loadingMedia">Chargement des médias</string>
+      <string name="tryagain">Veuillez réessayer</string>
 
 </resources>

@@ -28,9 +28,9 @@ public class UpdatableUserView implements UpdatableView {
 			LoginUtils.setLoggued(this.v.getContext(), false, "", "");
 
 			TextView error = (TextView) currentAct.findViewById(R.id.error);
-			error.setText("Veuillez réessayer");
+			error.setText(this.v.getResources().getString(R.string.tryagain));
 		} else {
-			
+
 			LoginUtils.setLoggued(this.v.getContext(), true,
 					usermodel.getLogin(), usermodel.getPassword());
 			// reload the current activity

@@ -1,5 +1,6 @@
 package org.lestaxinomes.les_taxinomes_android.views;
 
+import org.lestaxinomes.les_taxinomes_android.R;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 
 import android.widget.TextView;
@@ -44,10 +45,14 @@ public class UpdatableAuthorView implements UpdatableView {
 
 	@Override
 	public void update() {
-		this.avatarView.loadImage(authorModel.getAuthor().getLogoUrl());
+		if (authorModel.getAuthor().getLogoUrl() != null
+				&& !authorModel.getAuthor().getLogoUrl().trim().equals("")) {
+			this.avatarView.loadImage(authorModel.getAuthor().getLogoUrl());
+		}
 
-		authorNameView.setText("Publié par "
-				+ authorModel.getAuthor().getName());
+		authorNameView.setText(this.authorNameView.getContext().getResources()
+				.getString(R.string.publishby)
+				+ " " + authorModel.getAuthor().getName());
 	}
 
 }

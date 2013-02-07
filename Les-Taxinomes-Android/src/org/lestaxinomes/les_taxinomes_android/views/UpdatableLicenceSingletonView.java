@@ -12,6 +12,20 @@ public class UpdatableLicenceSingletonView implements UpdatableView {
 	private static List<Licence> licences;
 	private static LicenceModel licenceModel;
 
+	public static String getLicenceNameById(Integer licenceId) {
+		getInstance();
+		List<Licence> list = UpdatableLicenceSingletonView.getLicences();
+
+		if (list != null) {
+			for (Licence l : list) {
+				if (l.getId().equals(licenceId)) {
+					return l.getName();
+				}
+			}
+		}
+		return "";
+	}
+
 	public static UpdatableLicenceSingletonView getInstance() {
 		if (null == instance) { // Premier appel
 			instance = new UpdatableLicenceSingletonView();
@@ -25,15 +39,15 @@ public class UpdatableLicenceSingletonView implements UpdatableView {
 	}
 
 	/**
-	 * Constructeur redéfini comme étant privé pour interdire son appel et
-	 * forcer à passer par la méthode <link
+	 * Constructeur redï¿½fini comme ï¿½tant privï¿½ pour interdire son appel et
+	 * forcer ï¿½ passer par la mï¿½thode <link
 	 */
 	private UpdatableLicenceSingletonView() {
 	}
 
 	@Override
 	public void update() {
-		if (licenceModel.getLicences()!=null){
+		if (licenceModel.getLicences() != null) {
 			this.setLicences(licenceModel.getLicences());
 		}
 
