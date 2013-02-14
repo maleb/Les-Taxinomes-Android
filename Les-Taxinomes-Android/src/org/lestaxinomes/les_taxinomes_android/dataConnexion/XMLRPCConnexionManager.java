@@ -3,6 +3,7 @@ package org.lestaxinomes.les_taxinomes_android.dataConnexion;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 import org.lestaxinomes.les_taxinomes_android.model.CreateMediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.LicenceModel;
+import org.lestaxinomes.les_taxinomes_android.model.MediaFullDocumentModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
@@ -50,6 +51,13 @@ public class XMLRPCConnexionManager implements ConnexionManager {
 	@Override
 	public void loadLicences(LicenceModel licenceModel) {
 		(new XMLRPCConnexionManagerAsynctask()).execute(licenceModel);
+		
+	}
+
+	@Override
+	public void loadMediaFullDocument(
+			MediaFullDocumentModel mediaFullDocumentModel) {
+		(new XMLRPCConnexionManagerAsynctask()).execute(mediaFullDocumentModel);
 		
 	}
 

@@ -22,6 +22,7 @@ import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 import org.lestaxinomes.les_taxinomes_android.model.CreateMediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.LicenceModel;
+import org.lestaxinomes.les_taxinomes_android.model.MediaFullDocumentModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
@@ -192,15 +193,27 @@ public class XMLRPCConnexionManagerAsynctask extends
 		return loadMediaFromCallResult(callResult, null);
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	private Media loadMediaFullDocument(MediaFullDocumentModel mm) {
+		Map<String, Integer> criteres = new HashMap<String, Integer>();
+		criteres.put("id_article", mm.getMedia().getId());
+		//criteres.put("document_largeur", 600);
+		//criteres.put("vignette_largeur", 400);
+
+		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
+				"geodiv.lire_media", criteres);
+		return loadMediaFromCallResult(callResult, null);
+
+	}
 
 	@SuppressWarnings("unchecked")
 	private Media readMedia(MediaModel mm) {
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_article", mm.getMedia().getId());
+		criteres.put("document_largeur", 600);
 		//criteres.put("vignette_largeur", 400);
-		// WindowManager wm = (WindowManager)
-		// .getSystemService(Context.WINDOW_SERVICE);
-		// Display display = wm.getDefaultDisplay();
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
 				"geodiv.lire_media", criteres);
@@ -251,6 +264,13 @@ public class XMLRPCConnexionManagerAsynctask extends
 			if (mod instanceof MediaModel) {
 
 				((MediaModel) mod).setMedia(readMedia(((MediaModel) mod)));
+				res = mod;
+
+			}
+			
+			else if (mod instanceof MediaFullDocumentModel) {
+
+				((MediaFullDocumentModel) mod).setMedia(loadMediaFullDocument(((MediaFullDocumentModel) mod)));
 				res = mod;
 
 			}

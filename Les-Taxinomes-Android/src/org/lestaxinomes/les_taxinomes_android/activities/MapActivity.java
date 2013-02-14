@@ -93,7 +93,7 @@ public class MapActivity extends BaseActivity {
 		mapView.setClickable(true);
 		mapView.setMultiTouchControls(true);
 
-		mapView.getController().setZoom(50);
+		mapView.getController().setZoom(10);
 
 		// by default : brest
 		Double latitude = 48.3928;
