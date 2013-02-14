@@ -34,9 +34,21 @@ public class LoginUtils {
 		
 		
 	}
+	
+	public static String getAuthorId(Context ctx){
+		
+		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
+		return settings.getString("authorId", "").toString();
+		
+		
+	}
+	
+	
+	
+
 
 	public static void setLoggued(Context ctx, boolean b, String login,
-			String password) {
+			String password,String authorId) {
 
 		if (b) {
 			
@@ -48,6 +60,7 @@ public class LoginUtils {
 			editor.putString("logged", "logged");
 			editor.putString("login", login);
 			editor.putString("password", password);
+			editor.putString("authorId", authorId);
 			editor.commit();
 		} else {
 			SharedPreferences settings = ctx
@@ -56,10 +69,13 @@ public class LoginUtils {
 			editor.putString("logged", "");
 			editor.putString("login", "");
 			editor.putString("password", "");
+			editor.putString("authorId", authorId);
 			editor.commit();
 
 		}
 
 	}
+
+	
 
 }

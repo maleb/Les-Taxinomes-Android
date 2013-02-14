@@ -1,9 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context=".ConsultationActivity" >
+    tools:context=".ConsultationActivity"
+    android:gravity="center" >
 
     <Button
         android:id="@+id/takephotobutton"
@@ -11,6 +12,6 @@
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="Prendre une photo" />
+        android:text="@string/takephoto" />
 
 </LinearLayout>

@@ -1,26 +1,46 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="10dip" >
 
     <!-- Email Label -->
 
-    <TextView
-        android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/welcomeImageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:textColor="#372c24" />
-    
-    	<Button android:layout_width="match_parent" android:id="@+id/logoutbutton"
-		android:text="@string/logout" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" android:layout_height="40dp" />
-    	
-    	<Button android:layout_width="match_parent" android:id="@+id/publicationbutton"
-		android:text="@string/publishMedia" android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp" android:layout_height="40dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:adjustViewBounds="true"
+        android:clickable="false"
+        android:contentDescription="@string/image"
+        android:scaleType="matrix"
+        android:src="@drawable/default_avatar" />
 
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/publicationbutton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/publishMedia" />
+
+    <Button
+        android:id="@+id/logoutbutton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/logout" />
 
 </LinearLayout>

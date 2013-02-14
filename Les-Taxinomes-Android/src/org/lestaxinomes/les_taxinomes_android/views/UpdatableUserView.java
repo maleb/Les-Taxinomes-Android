@@ -25,14 +25,14 @@ public class UpdatableUserView implements UpdatableView {
 
 		if (usermodel.getAuthor() == null) {
 			// not loggued
-			LoginUtils.setLoggued(this.v.getContext(), false, "", "");
+			LoginUtils.setLoggued(this.v.getContext(), false, "", "","");
 
 			TextView error = (TextView) currentAct.findViewById(R.id.error);
 			error.setText(this.v.getResources().getString(R.string.tryagain));
 		} else {
 
 			LoginUtils.setLoggued(this.v.getContext(), true,
-					usermodel.getLogin(), usermodel.getPassword());
+					usermodel.getLogin(), usermodel.getPassword(),usermodel.getAuthor().getId().toString());
 			// reload the current activity
 
 			currentAct.finish();

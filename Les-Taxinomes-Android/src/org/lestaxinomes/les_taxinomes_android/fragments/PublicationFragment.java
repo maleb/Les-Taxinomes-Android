@@ -1,5 +1,6 @@
 package org.lestaxinomes.les_taxinomes_android.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,9 +71,11 @@ public class PublicationFragment extends BaseFragment {
 		public void run() {
 			location.runOnFirstFix(new Runnable() {
 				public void run() {
-					Toast.makeText(getActivity(),
-							"votre localisation est "+currentLat.toString()+"-"+currentLon.toString(), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(
+							getActivity(),
+							"votre localisation est " + currentLat.toString()
+									+ "-" + currentLon.toString(),
+							Toast.LENGTH_LONG).show();
 					GeoPoint mediaLocalisation = new GeoPoint(currentLat,
 							currentLon);
 					GIS mediaGIS = new GIS();
@@ -127,6 +132,32 @@ public class PublicationFragment extends BaseFragment {
 		Bitmap bitmap = BitmapFactory.decodeFile(loadedImageUri);
 		TextView uri = (TextView) view.findViewById(R.id.publicationDocUri);
 		uri.setText(loadedImageUri);
+
+		ExifInterface exif;
+		try {
+			exif = new ExifInterface(loadedImageUri);
+			int orientation = exif.getAttributeInt(
+					ExifInterface.TAG_ORIENTATION,
+					ExifInterface.ORIENTATION_NORMAL);
+
+			int rotate = 0;
+			if (orientation == 3) {
+				rotate = 180;
+			} else if (orientation == 6) {
+				rotate = 90;
+			} else if (orientation == 8) {
+				rotate = 270;
+			}
+
+			Matrix matrix = new Matrix();
+			matrix.postRotate(rotate);
+			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+					bitmap.getHeight(), matrix, true);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		imageView.setImageBitmap(bitmap);
 
@@ -226,8 +257,8 @@ public class PublicationFragment extends BaseFragment {
 			public void onClick(View v) {
 
 				Toast.makeText(getActivity(),
-						getResources().getString(R.string.loadingLocation), Toast.LENGTH_LONG)
-						.show();
+						getResources().getString(R.string.loadingLocation),
+						Toast.LENGTH_LONG).show();
 
 				// TODO store the lat and lon into something accessible in the
 				// publishbutton onclick

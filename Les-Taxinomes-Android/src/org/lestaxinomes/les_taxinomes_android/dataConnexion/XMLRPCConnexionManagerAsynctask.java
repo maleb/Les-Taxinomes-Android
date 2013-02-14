@@ -1,6 +1,8 @@
 package org.lestaxinomes.les_taxinomes_android.dataConnexion;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +31,10 @@ import org.lestaxinomes.les_taxinomes_android.model.Model;
 import org.lestaxinomes.les_taxinomes_android.model.UserModel;
 import org.lestaxinomes.les_taxinomes_android.utils.Base64;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.AsyncTask;
 import de.timroes.axmlrpc.XMLRPCClient;
 import de.timroes.axmlrpc.XMLRPCException;
@@ -193,14 +199,13 @@ public class XMLRPCConnexionManagerAsynctask extends
 		return loadMediaFromCallResult(callResult, null);
 
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	private Media loadMediaFullDocument(MediaFullDocumentModel mm) {
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_article", mm.getMedia().getId());
-		//criteres.put("document_largeur", 600);
-		//criteres.put("vignette_largeur", 400);
+		// criteres.put("document_largeur", 600);
+		// criteres.put("vignette_largeur", 400);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
 				"geodiv.lire_media", criteres);
@@ -213,7 +218,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_article", mm.getMedia().getId());
 		criteres.put("document_largeur", 600);
-		//criteres.put("vignette_largeur", 400);
+		// criteres.put("vignette_largeur", 400);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
 				"geodiv.lire_media", criteres);
@@ -267,10 +272,11 @@ public class XMLRPCConnexionManagerAsynctask extends
 				res = mod;
 
 			}
-			
+
 			else if (mod instanceof MediaFullDocumentModel) {
 
-				((MediaFullDocumentModel) mod).setMedia(loadMediaFullDocument(((MediaFullDocumentModel) mod)));
+				((MediaFullDocumentModel) mod)
+						.setMedia(loadMediaFullDocument(((MediaFullDocumentModel) mod)));
 				res = mod;
 
 			}
