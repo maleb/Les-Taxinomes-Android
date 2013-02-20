@@ -22,10 +22,12 @@
     <string name="publishby">Publié par</string>
     <string name="title">Titre</string>
     <string name="description">Description</string>
-    <string name="pleaseWait">Veuillez patienter ...</string>
+    <string name="pleaseWait">Envoi du média en cours, veuillez patienter jusqu\'à votre redirection</string>
     <string name="loadLocation">Charger ma localisation</string>
+    <string name="hideloadLocation">Ne pas utiliser cette localisation</string>
     <string name="loadingLocation">Chargement de votre localisation</string>
     <string name="loadingMedia">Chargement des médias</string>
     <string name="tryagain">Veuillez réessayer</string>
+    <string name="center_to_current_location">Centrer sur moi</string>
 
 </resources>

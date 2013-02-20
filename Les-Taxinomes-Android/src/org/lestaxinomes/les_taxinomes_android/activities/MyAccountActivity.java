@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MyAccountActivity extends BaseActivity {
+public class MyAccountActivity extends BasePublicationActivity {
 	public static final String PREFS_NAME = "LoginPrefs";
 	
 
@@ -26,14 +26,6 @@ public class MyAccountActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_account);
 		
-		//if no authorId in Preferences : logout properly and go to the login screen
-		if (LoginUtils.getAuthorId(this)==null || LoginUtils.getAuthorId(this).trim().equals("")){
-			LoginUtils.setLoggued(this, false, "", "", "");
-			Intent intent = new Intent(this, Login.class);
-			startActivity(intent);
-			finish();
-			
-		}
 
 		ImageView avatar = (ImageView) findViewById(R.id.welcomeImageView);
 		UpdatableImageView uiv = new UpdatableImageView();

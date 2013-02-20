@@ -34,7 +34,7 @@ public class UpdatableGISListView implements UpdatableView {
 //				new GeoPoint(center.getLatitude(), center.getLongitude()));
 
 		// clean the old POIS
-		GISUtils.removePOIs(mapView);
+		//GISUtils.removePOIs(mapView);
 
 		// add the new POIs
 		GISUtils.setMediaListOnMapView(mediaList, mapView);

@@ -16,8 +16,8 @@
             android:id="@+id/result"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/image"
             android:scaleType="fitStart" />
@@ -50,19 +50,14 @@
         <EditText
             android:id="@+id/publicationDescription"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:inputType="text"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:inputType="textMultiLine"
             android:textStyle="normal"
-            android:typeface="sans" />
-
-        <org.osmdroid.views.MapView
-            android:id="@+id/publicationMapView"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_margin="20dip"
-            android:layout_weight="1"
-            android:clickable="false" 
-            android:visibility="gone"/>
+            android:typeface="sans"           
+            android:lines="5"
+            android:gravity="top"
+             />
 
         <TextView
             android:id="@+id/publicationDocUri"
@@ -98,9 +93,16 @@
             android:id="@+id/loadLocationbutton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/loadLocation"
+            android:visibility="visible" />
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/publicationMapView"
+            android:layout_width="fill_parent"
+            android:layout_height="300dip"
+            android:layout_marginBottom="10dp"
+            android:clickable="false"
             android:visibility="gone" />
 
         <Button
@@ -115,6 +117,8 @@
             android:layout_height="wrap_content"
             android:text="@string/pleaseWait"
             android:visibility="gone" />
+        
+       
     </LinearLayout>
 
 </ScrollView>

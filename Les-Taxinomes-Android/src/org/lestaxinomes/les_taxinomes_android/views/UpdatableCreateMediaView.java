@@ -6,6 +6,7 @@ import org.lestaxinomes.les_taxinomes_android.model.CreateMediaModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 public class UpdatableCreateMediaView implements UpdatableView {
 
@@ -29,6 +30,9 @@ public class UpdatableCreateMediaView implements UpdatableView {
 				currentAct.startActivity(intent);
 				currentAct.finish();
 			}
+		}
+		else  {
+			Toast.makeText(this.v.getContext(), "Erreur lors de la publication", Toast.LENGTH_LONG).show();
 		}
 
 	}

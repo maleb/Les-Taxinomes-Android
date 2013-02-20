@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class ImagePickActivity extends BaseActivity {
+public class ImagePickActivity extends BasePublicationActivity {
 
 	private static final int REQUEST_CODE = 1;
 

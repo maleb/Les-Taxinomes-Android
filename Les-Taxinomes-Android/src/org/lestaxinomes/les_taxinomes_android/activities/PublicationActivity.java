@@ -4,7 +4,7 @@ import org.lestaxinomes.les_taxinomes_android.R;
 
 import android.os.Bundle;
 
-public class PublicationActivity extends BaseActivity {
+public class PublicationActivity extends BasePublicationActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

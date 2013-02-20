@@ -165,17 +165,19 @@ public class XMLRPCConnexionManagerAsynctask extends
 		criteres.put("texte", cmm.getMedia().getDescription());
 		criteres.put("id_licence", cmm.getMedia().getLicenceId().toString());
 
-		if (cmm.getMedia().getGis() != null) {
-
-			Map<String, Object> gis = new HashMap<String, Object>();
-			gis.put("lat",
-					Float.toString(cmm.getMedia().getGis().getLatitude()
-							.floatValue()));
-			gis.put("lon",
-					Float.toString(cmm.getMedia().getGis().getLongitude()
-							.floatValue()));
-			criteres.put("gis", gis);
-		}
+//		if (cmm.getMedia().getGis() != null) {
+//
+//			Map<String, Object> gis = new HashMap<String, Object>();
+//			Double latitude = cmm.getMedia().getGis().getLatitude();
+//			Double longitude = cmm.getMedia().getGis().getLongitude();
+//			
+//			//Brest
+////			Double latitude = 48.3928;
+////			Double longitude = -4.445702;
+//			gis.put("lat", Float.toString(latitude.floatValue()));
+//			gis.put("lon", Float.toString(longitude.floatValue()));
+//			criteres.put("gis", gis);
+//		}
 
 		Map<String, Object> doc = new HashMap<String, Object>();
 		doc.put("name", cmm.getMedia().getTitre() + ".jpg");
@@ -187,6 +189,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 			encodedImage = Base64.encodeFromFile(cmm.getLocalMediaUri());
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 

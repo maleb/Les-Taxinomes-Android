@@ -1,6 +1,5 @@
 package org.lestaxinomes.les_taxinomes_android.activities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,14 +11,15 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,13 +32,13 @@ public class MapActivity extends BaseActivity {
 	Double currentLon;
 	LocationManager lm;
 	LocationListener ll;
-	boolean currentLocFirstLoadAlreadyDone=false;
-
+	boolean currentLocFirstLoadAlreadyDone = false;
 
 	final int LOAD_MORE_INCREMENT = 7;
 	Integer limit = 1;
 	MapView mapView;
 	GIS center;
+	private MyLocationOverlay locationOverlay;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,8 +50,6 @@ public class MapActivity extends BaseActivity {
 	}
 
 	private void loadmore() {
-		// TODO loadmore around the current map center (and not the original
-		// center)
 		center.setLatitude(mapView.getMapCenter().getLatitudeE6() * 1E-6);
 		center.setLongitude(mapView.getMapCenter().getLongitudeE6() * 1E-6);
 
@@ -79,6 +77,9 @@ public class MapActivity extends BaseActivity {
 		case R.id.map_loadmore:
 			loadmore();
 			return true;
+		case R.id.center_to_current_location:
+			centerToCurrentLocation();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -98,39 +99,23 @@ public class MapActivity extends BaseActivity {
 		// by default : brest
 		Double latitude = 48.3928;
 		Double longitude = -4.445702;
-		Integer mediaId = 1;
 
-		// // if gps enabled : by default = current location
-		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		ll = new Myll();
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, ll);
-		location = new MyLocationOverlay(getApplicationContext(), mapView);
-		// ajouter la loc
-		mapView.getOverlays().add(location);
-		// afficher
-		location.enableMyLocation();
-
-		if (currentLat != null && currentLon != null) {
-			latitude = currentLat;
-			longitude = currentLon;
-		}
-
-		// GIS currentLocation = new
-		// CurrentLocationListener().getCurrentLocation(this);
-		// latitude=currentLocation.getLatitude();
-		// longitude=currentLocation.getLongitude();
+		boolean oneMediaToDisplay = false;
 
 		Intent intent = getIntent();
 
 		if (intent.getStringExtra("lat") != null
 				&& intent.getStringExtra("lon") != null) {
+			oneMediaToDisplay = true;
+
+			// there is 1 media to display
 			latitude = Double.parseDouble(intent.getStringExtra("lat"));
 			longitude = Double.parseDouble(intent.getStringExtra("lon"));
 		}
 
-		if (intent.getStringExtra("mediaId") != null) {
-			mediaId = Integer.parseInt(intent.getStringExtra("mediaId"));
-		}
+		// if (intent.getStringExtra("mediaId") != null) {
+		// mediaId = Integer.parseInt(intent.getStringExtra("mediaId"));
+		// }
 
 		center = new GIS();
 		center.setLatitude(latitude);
@@ -141,46 +126,97 @@ public class MapActivity extends BaseActivity {
 		mapView.getController().setCenter(
 				new GeoPoint(center.getLatitude(), center.getLongitude()));
 
-		loadmore();
+		if (!oneMediaToDisplay) {
+
+			// no localisation to center -> center to current location of the
+			// user
+			centerToCurrentLocation();
+
+		}
+
+		if (oneMediaToDisplay) {
+			// display media markers when creating the view : only if we come
+			// from a media Detail -> load 1 marker -the one of the media)
+			loadmore();
+		} else {
+			// when the user will clic on "load more", he wants to see 7 medias
+			// -not just one)
+			limit += LOAD_MORE_INCREMENT;
+		}
 
 		setContentView(mapView);
 
 	}
 
-	private class Myll implements LocationListener {
+	private void askForGPSIfNeeded() {
 
-		public void onLocationChanged(Location location) {
-			currentLat = location.getLatitude();
-			currentLon = location.getLongitude();
-			
-			//we animate the mapview to the currentLocation the first time, but not always.
-			//(the user may want to center the mapview on another point as the currentLocation)
-			if (!currentLocFirstLoadAlreadyDone){
-			run();
-			currentLocFirstLoadAlreadyDone=true;
+		// This verification should be done during onStart() because the system
+		// calls
+		// this method when the user returns to the activity, which ensures the
+		// desired
+		// location provider is enabled each time the activity resumes from the
+		// stopped state.
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		final boolean gpsEnabled = locationManager
+				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+		if (!gpsEnabled) {
+			// Build an alert dialog here that requests that the user enable
+			// the location services, then when the user clicks the "OK" button,
+			// call enableLocationSettings()
+			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(
+					MapActivity.this);
+			myAlertDialog.setTitle("Activation du GPS");
+			myAlertDialog
+					.setMessage("Pour améliorer votre positionnement, veuillez activer votre GPS");
+			myAlertDialog.setPositiveButton("OK",
+					new DialogInterface.OnClickListener() {
+
+						public void onClick(DialogInterface arg0, int arg1) {
+							// do something when the OK button is clicked
+							enableLocationSettings();
+						}
+					});
+			myAlertDialog.setNegativeButton("Annuler",
+					new DialogInterface.OnClickListener() {
+
+						public void onClick(DialogInterface arg0, int arg1) {
+							// do something when the Cancel button is clicked
+						}
+					});
+			myAlertDialog.show();
+
+		}
+	}
+
+	private void enableLocationSettings() {
+		Intent settingsIntent = new Intent(
+				Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		startActivity(settingsIntent);
+	}
+
+	private void centerToCurrentLocation() {
+
+		askForGPSIfNeeded();
+		locationOverlay = new MyLocationOverlay(getApplicationContext(),
+				mapView);
+
+		// ajouter la loc
+		mapView.getOverlays().add(locationOverlay);
+		// afficher
+		locationOverlay.enableMyLocation();
+
+		locationOverlay.runOnFirstFix(new Runnable() {
+			public void run() {
+				mapView.getController().animateTo(
+						locationOverlay.getMyLocation());
+
+				center.setLatitude(locationOverlay.getMyLocation()
+						.getLatitudeE6() * 1E-6);
+				center.setLongitude(locationOverlay.getMyLocation()
+						.getLongitudeE6() * 1E-6);
 			}
-		}
-
-		public void run() {
-			location.runOnFirstFix(new Runnable() {
-				public void run() {
-					mapView.getController().animateTo(location.getMyLocation());
-				}
-			});
-		}
-
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-		}
-
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-		}
-
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-
-		}
+		});
 	}
 
 }
