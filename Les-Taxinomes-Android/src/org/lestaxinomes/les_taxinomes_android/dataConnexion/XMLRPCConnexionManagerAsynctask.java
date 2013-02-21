@@ -41,11 +41,11 @@ public class XMLRPCConnexionManagerAsynctask extends
 		AsyncTask<Model, Integer, Model> {
 
 	// real site
-//	 private static final String serverURL =
-//	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+	 private static final String serverURL =
+	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
 	// test site
-	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+	//private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
 	private static Object XMLRPCCall(String fonction, Object criteres) {
 		Object res = null;
