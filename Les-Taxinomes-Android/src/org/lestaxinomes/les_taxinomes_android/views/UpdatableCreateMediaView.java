@@ -23,20 +23,19 @@ public class UpdatableCreateMediaView implements UpdatableView {
 
 	@Override
 	public void update() {
+		if (this.progressDialog!=null){
+			this.progressDialog.dismiss();
+		}
 
-		if (createMediaModel.getMedia() != null) {
-			if (createMediaModel.getMedia().getId() != null) {
+		if (createMediaModel.getMedia() != null && createMediaModel.getMedia().getId() != null) {
 				Activity currentAct = (Activity) this.v.getContext();
 				
-				if (this.progressDialog!=null){
-					this.progressDialog.dismiss();
-				}
+				
 
 				Intent intent = new Intent(currentAct, MediaActivity.class);
 				intent.putExtra("mediaId", createMediaModel.getMedia().getId());
 				currentAct.startActivity(intent);
 				currentAct.finish();
-			}
 		}
 		else  {
 			Toast.makeText(this.v.getContext(), "Erreur lors de la publication", Toast.LENGTH_LONG).show();

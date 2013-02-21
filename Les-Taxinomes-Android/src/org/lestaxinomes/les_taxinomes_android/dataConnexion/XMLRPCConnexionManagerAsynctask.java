@@ -24,8 +24,10 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
 import org.lestaxinomes.les_taxinomes_android.model.UserModel;
+
+import de.timroes.axmlrpc.XMLRPCClient;
 //import org.lestaxinomes.les_taxinomes_android.utils.Base64;
-import org.xmlrpc.android.XMLRPCClient;
+//import org.xmlrpc.android.XMLRPCClient;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,12 +47,16 @@ public class XMLRPCConnexionManagerAsynctask extends
 	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
 	// test site
-	//private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+//	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
-	private static Object XMLRPCCall(String fonction, Object criteres) {
+	private static Object XMLRPCCall(String fonction, Object criteres, String login, String password) {
 		Object res = null;
 		try {
 			XMLRPCClient client = new XMLRPCClient(new URL(serverURL));
+			
+			if (login!=null && password!=null){
+				client.setLoginData(login, password);
+			}
 			
 
 			res = client.call(fonction, criteres);
@@ -61,6 +67,9 @@ public class XMLRPCConnexionManagerAsynctask extends
 		} 
 		return res;
 	}
+	
+	
+	
 
 	private Media loadMediaFromCallResult(Map<String, Object> callResult,
 			MediaModel mm) {
@@ -204,7 +213,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 		criteres.put("document", doc);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"geodiv.creer_media", criteres);
+				"geodiv.creer_media", criteres, cmm.getLogin(), cmm.getPassword());
 		return loadMediaFromCallResult(callResult, null);
 
 	}
@@ -216,8 +225,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 		// criteres.put("document_largeur", 600);
 		// criteres.put("vignette_largeur", 400);
 
-		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"geodiv.lire_media", criteres);
+		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall("geodiv.lire_media", criteres, null, null);
 		return loadMediaFromCallResult(callResult, null);
 
 	}
@@ -230,14 +238,14 @@ public class XMLRPCConnexionManagerAsynctask extends
 		// criteres.put("vignette_largeur", 400);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"geodiv.lire_media", criteres);
+				"geodiv.lire_media", criteres,null,null);
 		return loadMediaFromCallResult(callResult, mm);
 
 	}
 
 	@SuppressWarnings("unchecked")
 	private List<Media> getMediaListByCriteria(Map<String, String> criteria) {
-		Object b = XMLRPCCall("geodiv.liste_medias", criteria);
+		Object b = XMLRPCCall("geodiv.liste_medias", criteria,null,null);
 		Object[] c = (Object[]) b;
 		List<Media> listMedia = new ArrayList<Media>();
 		if (c != null) {
@@ -336,7 +344,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 	private List<Licence> loadLicences() {
 		HashMap<String, Object> b = (HashMap<String, Object>) XMLRPCCall(
-				"spip.liste_licences", new HashMap<String, Object>());
+				"spip.liste_licences", new HashMap<String, Object>(),null,null);
 
 		List<Licence> list = new ArrayList<Licence>();
 
@@ -376,7 +384,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 		array[0] = login;
 		array[1] = password;
 
-		Object res = XMLRPCCall("spip.auth", array);
+		Object res = XMLRPCCall("spip.auth", array,null,null);
 
 		if (res instanceof Boolean) {
 			if (!(Boolean) res) {
@@ -405,7 +413,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 		@SuppressWarnings("unchecked")
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"spip.lire_auteur", criteres);
+				"spip.lire_auteur", criteres,null,null);
 		return createAuthorFromCallResult(callResult);
 	}
 

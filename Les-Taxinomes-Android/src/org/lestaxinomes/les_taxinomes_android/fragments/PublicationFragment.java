@@ -76,9 +76,9 @@ public class PublicationFragment extends BaseFragment {
 
 		imageView = (ImageView) view.findViewById(R.id.result);
 		Options options = new BitmapFactory.Options();
-		options.inSampleSize=2;
+		options.inSampleSize = 2;
 
-		Bitmap bitmap = BitmapFactory.decodeFile(loadedImageUri,options);
+		Bitmap bitmap = BitmapFactory.decodeFile(loadedImageUri, options);
 		TextView uri = (TextView) view.findViewById(R.id.publicationDocUri);
 		uri.setText(loadedImageUri);
 
@@ -99,11 +99,15 @@ public class PublicationFragment extends BaseFragment {
 			}
 
 			Matrix matrix = new Matrix();
-			//matrix.postScale(2, 2); //reduce the size by 2 for having a lighter bitmap to display
+			// matrix.postScale(2, 2); //reduce the size by 2 for having a
+			// lighter bitmap to display
 			matrix.postRotate(rotate);
-		
-			bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-					bitmap.getHeight(), matrix, true);
+
+			if (bitmap != null) {
+
+				bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+						bitmap.getHeight(), matrix, true);
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -160,13 +164,14 @@ public class PublicationFragment extends BaseFragment {
 				// R.id.publicationPleaseWait);
 				// pleaseWait.setVisibility(View.VISIBLE);
 
-//				Toast.makeText(
-//						v.getContext(),
-//						v.getContext().getResources()
-//								.getString(R.string.pleaseWait),
-//						Toast.LENGTH_LONG).show();
-				
-				ProgressDialog progressDialog = ProgressDialog.show(v.getContext(), "Envoi en cours", "Veuillez patienter");
+				// Toast.makeText(
+				// v.getContext(),
+				// v.getContext().getResources()
+				// .getString(R.string.pleaseWait),
+				// Toast.LENGTH_LONG).show();
+
+				ProgressDialog progressDialog = ProgressDialog.show(
+						v.getContext(), "Envoi en cours", "Veuillez patienter");
 
 				TextView licenceId = (TextView) v.getRootView().findViewById(
 						R.id.publicationLicenceId);
@@ -194,7 +199,7 @@ public class PublicationFragment extends BaseFragment {
 				CreateMediaModel cmm = new CreateMediaModel();
 
 				UpdatableCreateMediaView ucmv = new UpdatableCreateMediaView(v,
-						cmm,progressDialog);
+						cmm, progressDialog);
 				cmm.addView(ucmv);
 
 				cmm.setLocalMediaUri(uri.getText().toString());
