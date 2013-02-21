@@ -1,12 +1,5 @@
 package org.lestaxinomes.les_taxinomes_android.dataConnexion;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,25 +23,22 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
 import org.lestaxinomes.les_taxinomes_android.model.UserModel;
 import org.lestaxinomes.les_taxinomes_android.utils.Base64;
+import org.xmlrpc.android.XMLRPCClient;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
 import android.os.AsyncTask;
-import de.timroes.axmlrpc.XMLRPCClient;
-import de.timroes.axmlrpc.XMLRPCException;
-import de.timroes.axmlrpc.XMLRPCServerException;
+//import de.timroes.axmlrpc.XMLRPCClient;
+//import de.timroes.axmlrpc.XMLRPCException;
+//import de.timroes.axmlrpc.XMLRPCServerException;
 
 public class XMLRPCConnexionManagerAsynctask extends
 		AsyncTask<Model, Integer, Model> {
 
 	// real site
-	 private static final String serverURL =
-	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+//	 private static final String serverURL =
+//	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
 	// test site
-//	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
 	private static Object XMLRPCCall(String fonction, Object criteres) {
 		Object res = null;
@@ -57,16 +47,10 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 			res = client.call(fonction, criteres);
 
-		} catch (XMLRPCServerException ex) {
+		} catch (Exception ex) {
 			// The server throw an error.
 			ex.printStackTrace();
-		} catch (XMLRPCException ex) {
-			// An error occured in the client.
-			ex.printStackTrace();
-		} catch (Exception ex) {
-			// Any other exception
-			ex.printStackTrace();
-		}
+		} 
 		return res;
 	}
 
@@ -165,23 +149,24 @@ public class XMLRPCConnexionManagerAsynctask extends
 		criteres.put("texte", cmm.getMedia().getDescription());
 		criteres.put("id_licence", cmm.getMedia().getLicenceId().toString());
 
-//		if (cmm.getMedia().getGis() != null) {
-//
-//			Map<String, Object> gis = new HashMap<String, Object>();
-//			Double latitude = cmm.getMedia().getGis().getLatitude();
-//			Double longitude = cmm.getMedia().getGis().getLongitude();
-//			
-//			//Brest
-////			Double latitude = 48.3928;
-////			Double longitude = -4.445702;
-//			gis.put("lat", Float.toString(latitude.floatValue()));
-//			gis.put("lon", Float.toString(longitude.floatValue()));
-//			criteres.put("gis", gis);
-//		}
+		if (cmm.getMedia().getGis() != null) {
+
+			Map<String, Object> gis = new HashMap<String, Object>();
+			Double latitude = cmm.getMedia().getGis().getLatitude();
+			Double longitude = cmm.getMedia().getGis().getLongitude();
+			
+			//Brest
+//			Double latitude = 48.3928;
+//			Double longitude = -4.445702;
+			gis.put("lat", Float.toString(latitude.floatValue()));
+			gis.put("lon", Float.toString(longitude.floatValue()));
+			criteres.put("gis", gis);
+		}
 
 		Map<String, Object> doc = new HashMap<String, Object>();
 		doc.put("name", cmm.getMedia().getTitre() + ".jpg");
 		doc.put("type", "image/jpeg");
+		
 
 		String encodedImage = null;
 		try {
