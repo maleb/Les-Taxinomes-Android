@@ -1,5 +1,7 @@
 package org.lestaxinomes.les_taxinomes_android.dataConnexion;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,13 +24,18 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
 import org.lestaxinomes.les_taxinomes_android.model.UserModel;
-import org.lestaxinomes.les_taxinomes_android.utils.Base64;
+//import org.lestaxinomes.les_taxinomes_android.utils.Base64;
 import org.xmlrpc.android.XMLRPCClient;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.os.AsyncTask;
 //import de.timroes.axmlrpc.XMLRPCClient;
 //import de.timroes.axmlrpc.XMLRPCException;
 //import de.timroes.axmlrpc.XMLRPCServerException;
+import android.os.Environment;
+import android.util.Base64;
 
 public class XMLRPCConnexionManagerAsynctask extends
 		AsyncTask<Model, Integer, Model> {
@@ -44,6 +51,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 		Object res = null;
 		try {
 			XMLRPCClient client = new XMLRPCClient(new URL(serverURL));
+			
 
 			res = client.call(fonction, criteres);
 
@@ -170,8 +178,21 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 		String encodedImage = null;
 		try {
+			
+			//new File(cmm.getLocalMediaUri());
 
-			encodedImage = Base64.encodeFromFile(cmm.getLocalMediaUri());
+			//encodedImage = Base64.encodeFromFile(cmm.getLocalMediaUri());
+			
+			
+			Options options = new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			//BitmapFactory.decodeFile(cmm.getLocalMediaUri(), options);
+			Bitmap bm = BitmapFactory.decodeFile(cmm.getLocalMediaUri(),options);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+			bm.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object   
+			byte[] b = baos.toByteArray(); 
+			
+			encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -244,6 +265,11 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 			AsyncTask<Model, Integer, Model> authorAT = new XMLRPCConnexionManagerAsynctask();
 			authorAT.execute(((MediaModel) model).getAuthorModel());
+		}
+		else if (model instanceof CreateMediaModel){
+			File fi = new File(Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/tmpTaxinomes");
+			fi.delete();
 		}
 
 	}

@@ -51,13 +51,12 @@
             android:id="@+id/publicationDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:inputType="textMultiLine"
-            android:textStyle="normal"
-            android:typeface="sans"           
-            android:lines="5"
             android:gravity="top"
-             />
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:singleLine="false"
+            android:textStyle="normal"
+            android:typeface="sans" />
 
         <TextView
             android:id="@+id/publicationDocUri"
@@ -117,8 +116,12 @@
             android:layout_height="wrap_content"
             android:text="@string/pleaseWait"
             android:visibility="gone" />
-        
-       
+
+       <!--  <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </ProgressBar> -->
     </LinearLayout>
 
 </ScrollView>

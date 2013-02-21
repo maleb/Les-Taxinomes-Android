@@ -67,6 +67,9 @@ public class Login extends BaseActivity {
 					um.setPassword(password.getText().toString());
 					um.addView(new UpdatableUserView(v.getRootView(), um));
 					um.getConnexionManager().authenticate(um);
+				} else {
+					TextView error = (TextView) v.getRootView().findViewById(R.id.error);
+					error.setText(v.getResources().getString(R.string.tryagain));
 				}
 
 				/*
