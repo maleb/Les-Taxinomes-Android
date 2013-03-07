@@ -7,49 +7,30 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
-
-/*
- * Commun parent of all the activities of the application
- * Each activity should extends it
+/**
+ * 
+ * Common parent of all the activities of the application
+ * Each activity should (maybe indirectly) extends it
+ * 
+ *  @author Marie
  */
 public class BaseActivity extends FragmentActivity {
-	
 
-	private int widthOfView;
-
-	public int getWidthOfView(int parentViewId, final int viewId) {
-		int res = 0;
-		if (findViewById(parentViewId) != null) {
-			findViewById(parentViewId).getViewTreeObserver()
-					.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-						@Override
-						public void onGlobalLayout() {
-							if (findViewById(viewId) != null) {
-								setWidthOfView(findViewById(viewId).getWidth());
-							}
-						}
-					});
-		}
-		return res;
-	}
-
+	/**
+	 * Inflate the default menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_consultation, menu);
-		
 
 		return true;
 	}
 
-	private void openMapFilter() {
-		final Intent intent = new Intent(BaseActivity.this, MapActivity.class);
-		startActivity(intent);
-		finish();
-	}
-
+	/**
+	 * Handling the menu clicks commun to all the activities
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
@@ -72,20 +53,14 @@ public class BaseActivity extends FragmentActivity {
 			startActivity(intent4);
 			return true;
 		case R.id.map_filter:
-			openMapFilter();
+			final Intent intent5 = new Intent(BaseActivity.this,
+					MapActivity.class);
+			startActivity(intent5);
+			finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-	public int getWidthOfView() {
-		return widthOfView;
-	}
-
-	public void setWidthOfView(int widthOfView) {
-		this.widthOfView = widthOfView;
-	}
-
 
 }

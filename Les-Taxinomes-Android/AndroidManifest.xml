@@ -36,7 +36,7 @@
         </activity>
         <activity android:name="org.lestaxinomes.les_taxinomes_android.activities.ConsultationActivity" >
         </activity>
-        <activity android:name="org.lestaxinomes.les_taxinomes_android.activities.PublicationActivity" >
+        <activity android:name="org.lestaxinomes.les_taxinomes_android.activities.PublicationFormActivity" >
         </activity>
         <activity android:name="org.lestaxinomes.les_taxinomes_android.fragments.MediaListFragment$MediaActivity" >
         </activity>

@@ -24,6 +24,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+/**
+ * Displays a map
+ * <ul>
+ * <li>if "mediaId" StringExtra exists, centered on the media location</li>
+ * <li>else if GPS activated, centered on the current location of the user</li>
+ * <li>else centered on Brest</li>
+ * </ul>
+ * 
+ * and allows to load the closest medias of the center of the map (7 by 7)
+ * 
+ * @author Marie
+ * 
+ */
 public class MapActivity extends BaseActivity {
 
 	MapController myMapController;
@@ -40,6 +53,9 @@ public class MapActivity extends BaseActivity {
 	GIS center;
 	private MyLocationOverlay locationOverlay;
 
+	/**
+	 * loads a specific menu (with "load more" button etc)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -49,6 +65,10 @@ public class MapActivity extends BaseActivity {
 		return true;
 	}
 
+	/**
+	 * displays the "limit" closest medias of the map center on the map and
+	 * increase the limit
+	 */
 	private void loadmore() {
 		center.setLatitude(mapView.getMapCenter().getLatitudeE6() * 1E-6);
 		center.setLongitude(mapView.getMapCenter().getLongitudeE6() * 1E-6);
@@ -70,6 +90,10 @@ public class MapActivity extends BaseActivity {
 
 	}
 
+	/**
+	 * Handles the specific button clicks Other buttons (= the default menu) are
+	 * handled by the parent
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -113,10 +137,6 @@ public class MapActivity extends BaseActivity {
 			longitude = Double.parseDouble(intent.getStringExtra("lon"));
 		}
 
-		// if (intent.getStringExtra("mediaId") != null) {
-		// mediaId = Integer.parseInt(intent.getStringExtra("mediaId"));
-		// }
-
 		center = new GIS();
 		center.setLatitude(latitude);
 		center.setLongitude(longitude);
@@ -139,7 +159,7 @@ public class MapActivity extends BaseActivity {
 			// from a media Detail -> load 1 marker -the one of the media)
 			loadmore();
 		} else {
-			// when the user will clic on "load more", he wants to see 7 medias
+			// when the user will click on "load more", he wants to see 7 medias
 			// -not just one)
 			limit += LOAD_MORE_INCREMENT;
 		}
@@ -148,14 +168,11 @@ public class MapActivity extends BaseActivity {
 
 	}
 
+	/**
+	 * If GPS disabled, open a dialog asking to enable GPS
+	 */
 	private void askForGPSIfNeeded() {
 
-		// This verification should be done during onStart() because the system
-		// calls
-		// this method when the user returns to the activity, which ensures the
-		// desired
-		// location provider is enabled each time the activity resumes from the
-		// stopped state.
 		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		final boolean gpsEnabled = locationManager
 				.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -173,7 +190,7 @@ public class MapActivity extends BaseActivity {
 					new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface arg0, int arg1) {
-							// do something when the OK button is clicked
+							// when the OK button is clicked
 							enableLocationSettings();
 						}
 					});
@@ -189,12 +206,19 @@ public class MapActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * Opens the native "Settings" screen
+	 */
 	private void enableLocationSettings() {
 		Intent settingsIntent = new Intent(
 				Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 		startActivity(settingsIntent);
 	}
 
+	/**
+	 * Ask for enabling GPS if not enabled And center the map to the current
+	 * location of the user
+	 */
 	private void centerToCurrentLocation() {
 
 		askForGPSIfNeeded();

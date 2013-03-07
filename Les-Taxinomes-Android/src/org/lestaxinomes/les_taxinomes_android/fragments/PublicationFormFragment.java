@@ -50,7 +50,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PublicationFragment extends BaseFragment {
+public class PublicationFormFragment extends BaseFragment {
 
 	private ImageView imageView;
 	private MapView mapView;
