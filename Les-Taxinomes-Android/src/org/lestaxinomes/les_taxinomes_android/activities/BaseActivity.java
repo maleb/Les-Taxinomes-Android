@@ -9,6 +9,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
+
+/*
+ * Commun parent of all the activities of the application
+ * Each activity should extends it
+ */
 public class BaseActivity extends FragmentActivity {
 	
 
