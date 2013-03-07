@@ -16,6 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Populates the medialist view
+ * @author Marie
+ *
+ */
 public class MediaListAdapter extends ArrayAdapter<Media> {
 
 	Context context;
@@ -32,8 +37,12 @@ public class MediaListAdapter extends ArrayAdapter<Media> {
 		TextView author;
 	}
 
+	
+	//create the view from the media data 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
+		
+		//get the media from the position
 		Media rowItem = getItem(position);
 
 		LayoutInflater mInflater = (LayoutInflater) context

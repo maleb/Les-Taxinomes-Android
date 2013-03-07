@@ -45,9 +45,9 @@ public class UpdatableAuthorView implements UpdatableView {
 
 	@Override
 	public void update() {
-		if (authorModel.getAuthor().getLogoUrl() != null
-				&& !authorModel.getAuthor().getLogoUrl().trim().equals("")) {
-			this.avatarView.loadImage(authorModel.getAuthor().getLogoUrl());
+		if (authorModel.getAuthor().getAvatarUrl() != null
+				&& !authorModel.getAuthor().getAvatarUrl().trim().equals("")) {
+			this.avatarView.loadImage(authorModel.getAuthor().getAvatarUrl());
 		}
 
 		authorNameView.setText(this.authorNameView.getContext().getResources()

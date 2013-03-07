@@ -10,17 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Fragment displaying the details of a media (get the mediaId from the intent or the arguments).
+ * Displayed in each own Activity if portrait.
+ * Displayed at the right of the Media List Fragment if landscape (in the ConsultationActivty).
+ * @author Marie
+ *
+ */
 public class MediaFragment extends BaseFragment {
 
 	public static MediaFragment newInstance(int index, int mediaId) {
 		MediaFragment f = new MediaFragment();
-
-		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt("index", index);
 		args.putInt("mediaId", mediaId);
 		f.setArguments(args);
-
 		return f;
 	}
 

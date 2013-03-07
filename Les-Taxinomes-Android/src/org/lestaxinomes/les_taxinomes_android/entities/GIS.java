@@ -1,5 +1,9 @@
 package org.lestaxinomes.les_taxinomes_android.entities;
 
+/**
+ * the entity GIS (longitude/latitude)
+ * @author Marie
+ */
 public class GIS {
 
 	private Double longitude;

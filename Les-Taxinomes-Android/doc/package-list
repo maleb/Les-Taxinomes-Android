@@ -1,1 +1,9 @@
+org.lestaxinomes.les_taxinomes_android
 org.lestaxinomes.les_taxinomes_android.activities
+org.lestaxinomes.les_taxinomes_android.adapters
+org.lestaxinomes.les_taxinomes_android.dataConnexion
+org.lestaxinomes.les_taxinomes_android.entities
+org.lestaxinomes.les_taxinomes_android.fragments
+org.lestaxinomes.les_taxinomes_android.model
+org.lestaxinomes.les_taxinomes_android.utils
+org.lestaxinomes.les_taxinomes_android.views
