@@ -3,7 +3,11 @@ package org.lestaxinomes.les_taxinomes_android.views;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 
 import android.widget.TextView;
-
+/**
+ * Displays the "Mon espace" screen
+ * @author Marie
+ *
+ */
 public class UpdatableMyAccountView implements UpdatableView {
 
 	private AuthorModel authorModel;

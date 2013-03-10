@@ -11,90 +11,30 @@ import org.osmdroid.ResourceProxy;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.MyLocationOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
-import android.provider.Settings;
-
+/**
+ * Utilities for map and location
+ * @author Marie
+ *
+ */
 public class GISUtils {
-
-//	private static void askForGPSIfNeeded(final Context ctx) {
-//
-//		// This verification should be done during onStart() because the system
-//		// calls
-//		// this method when the user returns to the activity, which ensures the
-//		// desired
-//		// location provider is enabled each time the activity resumes from the
-//		// stopped state.
-//		LocationManager locationManager = (LocationManager) ctx
-//				.getSystemService(Context.LOCATION_SERVICE);
-//		final boolean gpsEnabled = locationManager
-//				.isProviderEnabled(LocationManager.GPS_PROVIDER);
-//
-//		if (!gpsEnabled) {
-//			// Build an alert dialog here that requests that the user enable
-//			// the location services, then when the user clicks the "OK" button,
-//			// call enableLocationSettings()
-//			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(ctx);
-//			myAlertDialog.setTitle("Activation du GPS");
-//			myAlertDialog
-//					.setMessage("Pour améliorer votre positionnement, veuillez activer votre GPS");
-//			myAlertDialog.setPositiveButton("OK",
-//					new DialogInterface.OnClickListener() {
-//
-//						public void onClick(DialogInterface arg0, int arg1) {
-//							// do something when the OK button is clicked
-//							enableLocationSettings(ctx);
-//						}
-//					});
-//			myAlertDialog.setNegativeButton("Annuler",
-//					new DialogInterface.OnClickListener() {
-//
-//						public void onClick(DialogInterface arg0, int arg1) {
-//							// do something when the Cancel button is clicked
-//						}
-//					});
-//			myAlertDialog.show();
-//
-//		}
-//	}
-//
-//	private static void enableLocationSettings(Context ctx) {
-//		Intent settingsIntent = new Intent(
-//				Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//		ctx.startActivity(settingsIntent);
-//	}
-//
-//	public static GeoPoint getCurrentLocation(
-//			MyLocationOverlay locationOverlay, MapView mapView) {
-//		askForGPSIfNeeded(mapView.getContext());
-//		locationOverlay = new MyLocationOverlay(mapView.getContext()
-//				.getApplicationContext(), mapView);
-//
-//		// ajouter la loc
-//		mapView.getOverlays().add(locationOverlay);
-//		// afficher
-//		locationOverlay.enableMyLocation();
-//		
-//
-//		return new GeoPoint(
-//				locationOverlay.getMyLocation().getLatitudeE6() * 1E-6,
-//				locationOverlay.getMyLocation().getLongitudeE6() * 1E-6);
-//
-//	}
-
+/**
+ * remove all the Points Of Interest from the mapView
+ * @param mapView the mapView from which remove the Points Of Interest
+ */
 	public static void removePOIs(final MapView mapView) {
 
 		mapView.getOverlayManager().clear();
 
 	}
-
+/**
+ * add Points Of Interest for each media of the list, on the mapView
+ * @param mediaList medias to display on the mapView
+ * @param mapView
+ */
 	public static void setMediaListOnMapView(List<Media> mediaList,
 			final MapView mapView) {
 

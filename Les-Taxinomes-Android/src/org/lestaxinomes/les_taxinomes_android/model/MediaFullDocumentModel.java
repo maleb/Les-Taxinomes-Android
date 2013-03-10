@@ -2,7 +2,11 @@ package org.lestaxinomes.les_taxinomes_android.model;
 
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
-
+/**
+ * Model for loading a media with its full-size document
+ * @author Marie
+ *
+ */
 public class MediaFullDocumentModel extends Model {
 
 	private Media media;

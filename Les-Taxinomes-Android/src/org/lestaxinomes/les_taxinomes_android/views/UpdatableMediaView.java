@@ -14,14 +14,17 @@ import org.lestaxinomes.les_taxinomes_android.utils.GISUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * Displays the Detail of a media
+ * @author Marie
+ *
+ */
 public class UpdatableMediaView implements UpdatableView {
 
 	private MediaModel mediaModel;
@@ -81,7 +84,6 @@ public class UpdatableMediaView implements UpdatableView {
 				
 				intent.putExtra("mediaId", mediaModel.getMedia().getId().toString());
 				((Activity) mapView.getContext()).startActivity(intent);
-				//((Activity) mapView.getContext()).finish();
 
 			}
 		});
@@ -110,12 +112,6 @@ public class UpdatableMediaView implements UpdatableView {
 					.getGis().getLatitude(), mediaModel.getMedia().getGis()
 					.getLongitude());
 
-			// by default : brest
-			// Double latitude = 48.3928;
-			// Double longitude = -4.445702;
-			//
-			//
-			// GeoPoint mediaLocalisation = new GeoPoint(latitude,longitude);
 
 			mapView.getController().setCenter(mediaLocalisation);
 
@@ -139,11 +135,6 @@ public class UpdatableMediaView implements UpdatableView {
 				}
 			});
 
-			// changing the width to full size
-			// android.view.ViewGroup.LayoutParams params = this.mapView
-			// .getLayoutParams();
-			// params.width = LayoutParams.MATCH_PARENT;
-			// this.mapView.setLayoutParams(params);
 
 			mapView.setVisibility(View.VISIBLE);
 			// reload view

@@ -7,7 +7,11 @@ import org.lestaxinomes.les_taxinomes_android.utils.LoginUtils;
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
-
+/**
+ * Handle the authentification form
+ * @author Marie
+ *
+ */
 public class UpdatableUserView implements UpdatableView {
 
 	private View v;

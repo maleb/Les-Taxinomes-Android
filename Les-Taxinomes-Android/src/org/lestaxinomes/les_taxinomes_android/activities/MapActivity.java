@@ -37,7 +37,7 @@ import android.view.MenuItem;
  * @author Marie
  * 
  */
-public class MapActivity extends BaseActivity {
+public class MapActivity extends BaseConsultationActivity {
 
 	MapController myMapController;
 	MyLocationOverlay location = null;

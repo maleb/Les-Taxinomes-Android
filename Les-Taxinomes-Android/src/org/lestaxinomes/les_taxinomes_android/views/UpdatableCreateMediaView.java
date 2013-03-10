@@ -8,7 +8,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
-
+/**
+ * Redirects to the Detail of the Media, if media creation was OK. or displays an error message.
+ * @author Marie
+ *
+ */
 public class UpdatableCreateMediaView implements UpdatableView {
 
 	private View v;

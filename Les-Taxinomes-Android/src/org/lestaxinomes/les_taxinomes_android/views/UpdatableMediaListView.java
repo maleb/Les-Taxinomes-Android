@@ -9,7 +9,11 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 
 import android.view.View;
 import android.widget.ListView;
-
+/**
+ * Displays the media list
+ * @author Marie
+ *
+ */
 public class UpdatableMediaListView implements UpdatableView {
 
 	private MediaListModel mediaListModel;

@@ -4,7 +4,11 @@ import org.lestaxinomes.les_taxinomes_android.R;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 
 import android.widget.TextView;
-
+/**
+ * Displays the author data in the screen "Details of a media"
+ * @author Marie
+ *
+ */
 public class UpdatableAuthorView implements UpdatableView {
 
 	private AuthorModel authorModel;

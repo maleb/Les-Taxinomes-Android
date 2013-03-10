@@ -2,7 +2,11 @@ package org.lestaxinomes.les_taxinomes_android.model;
 
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
-
+/**
+ * Model for creating a new media in the database
+ * @author Marie
+ *
+ */
 public class CreateMediaModel extends Model {
 	
 

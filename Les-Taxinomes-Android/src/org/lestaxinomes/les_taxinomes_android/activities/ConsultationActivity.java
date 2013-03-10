@@ -14,7 +14,7 @@ import android.os.Bundle;
  * @author Marie
  * 
  */
-public class ConsultationActivity extends BaseActivity {
+public class ConsultationActivity extends BaseConsultationActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

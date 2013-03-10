@@ -6,7 +6,11 @@ import java.util.Map;
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
 
-
+/**
+ * Model for loading a list of medias
+ * @author Marie
+ *
+ */
 public class MediaListModel extends Model{
 	
 	private List<Media> mediaList;

@@ -2,7 +2,11 @@ package org.lestaxinomes.les_taxinomes_android.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
+/**
+ * Handles login
+ * @author Marie
+ *
+ */
 public class LoginUtils {
 
 

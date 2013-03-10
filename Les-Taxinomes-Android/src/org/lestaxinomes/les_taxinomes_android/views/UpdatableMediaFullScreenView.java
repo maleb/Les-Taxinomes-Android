@@ -4,7 +4,11 @@ import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 
 import android.view.View;
 import android.webkit.WebView;
-
+/**
+ * Displays the document in full size
+ * @author Marie
+ *
+ */
 public class UpdatableMediaFullScreenView implements UpdatableView {
 
 	private MediaModel mediaModel;

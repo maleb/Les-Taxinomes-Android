@@ -8,6 +8,10 @@ public class Author {
 	private Integer id;
 	private String name;
 	private String avatarUrl;
+	
+	/**
+	 * used if this author represents the loggued user
+	 */
 	private String login;
 	private String password;
 

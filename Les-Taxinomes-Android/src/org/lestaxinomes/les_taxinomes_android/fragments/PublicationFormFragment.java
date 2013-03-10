@@ -1,27 +1,21 @@
 package org.lestaxinomes.les_taxinomes_android.fragments;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.lestaxinomes.les_taxinomes_android.R;
-import org.lestaxinomes.les_taxinomes_android.activities.MapActivity;
 import org.lestaxinomes.les_taxinomes_android.entities.GIS;
 import org.lestaxinomes.les_taxinomes_android.entities.Licence;
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.model.CreateMediaModel;
-import org.lestaxinomes.les_taxinomes_android.utils.GISUtils;
 import org.lestaxinomes.les_taxinomes_android.utils.LoginUtils;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableCreateMediaView;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableLicenceSingletonView;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MyLocationOverlay;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ActionBar.LayoutParams;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,8 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Matrix;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.os.Bundle;
@@ -49,7 +41,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Displays the form for sending a media and its informations
+ * @author Marie
+ *
+ */
 public class PublicationFormFragment extends BaseFragment {
 
 	private ImageView imageView;
@@ -64,6 +60,8 @@ public class PublicationFormFragment extends BaseFragment {
 		View view = inflater.inflate(R.layout.publication_fragment, container,
 				false);
 
+		
+		//get the loaded image path
 		String loadedImageUri = null;
 		Intent intent = getActivity().getIntent();
 		if (intent.getExtras() != null) {
@@ -73,15 +71,17 @@ public class PublicationFormFragment extends BaseFragment {
 			}
 
 		}
-
-		imageView = (ImageView) view.findViewById(R.id.result);
-		Options options = new BitmapFactory.Options();
-		options.inSampleSize = 2;
-
-		Bitmap bitmap = BitmapFactory.decodeFile(loadedImageUri, options);
+		
+		//store it for sending it later
 		TextView uri = (TextView) view.findViewById(R.id.publicationDocUri);
 		uri.setText(loadedImageUri);
 
+	//get the bitmap of the image
+		Options options = new BitmapFactory.Options();
+		options.inSampleSize = 2;
+		Bitmap bitmap = BitmapFactory.decodeFile(loadedImageUri, options);
+
+		//rotate it if needed
 		ExifInterface exif;
 		try {
 			exif = new ExifInterface(loadedImageUri);
@@ -99,8 +99,6 @@ public class PublicationFormFragment extends BaseFragment {
 			}
 
 			Matrix matrix = new Matrix();
-			// matrix.postScale(2, 2); //reduce the size by 2 for having a
-			// lighter bitmap to display
 			matrix.postRotate(rotate);
 
 			if (bitmap != null) {
@@ -110,18 +108,17 @@ public class PublicationFormFragment extends BaseFragment {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		//display the bitmap
+		imageView = (ImageView) view.findViewById(R.id.result);
 		imageView.setImageBitmap(bitmap);
 
 		// load licences selectlist
-
 		Spinner spinner = (Spinner) view.findViewById(R.id.licenceSpinner);
 		final List<Licence> list = UpdatableLicenceSingletonView.getInstance()
 				.getLicences();
-
 		ArrayAdapter<Licence> dataAdapter = new ArrayAdapter<Licence>(
 				getActivity(), android.R.layout.simple_spinner_item, list);
 		dataAdapter
@@ -148,6 +145,8 @@ public class PublicationFormFragment extends BaseFragment {
 			}
 		});
 
+		
+		//handle the click on the "send" button
 		Button pb = (Button) view.findViewById(R.id.publishbutton);
 		pb.setOnClickListener(new OnClickListener() {
 			@Override
@@ -159,16 +158,6 @@ public class PublicationFormFragment extends BaseFragment {
 						R.id.publicationDescription);
 				TextView uri = (TextView) v.getRootView().findViewById(
 						R.id.publicationDocUri);
-				// TextView pleaseWait = (TextView)
-				// v.getRootView().findViewById(
-				// R.id.publicationPleaseWait);
-				// pleaseWait.setVisibility(View.VISIBLE);
-
-				// Toast.makeText(
-				// v.getContext(),
-				// v.getContext().getResources()
-				// .getString(R.string.pleaseWait),
-				// Toast.LENGTH_LONG).show();
 
 				ProgressDialog progressDialog = ProgressDialog.show(
 						v.getContext(), "Envoi en cours", "Veuillez patienter");
@@ -253,12 +242,6 @@ public class PublicationFormFragment extends BaseFragment {
 
 	private void askForGPSIfNeeded() {
 
-		// This verification should be done during onStart() because the system
-		// calls
-		// this method when the user returns to the activity, which ensures the
-		// desired
-		// location provider is enabled each time the activity resumes from the
-		// stopped state.
 		LocationManager locationManager = (LocationManager) getActivity()
 				.getSystemService(Context.LOCATION_SERVICE);
 		final boolean gpsEnabled = locationManager

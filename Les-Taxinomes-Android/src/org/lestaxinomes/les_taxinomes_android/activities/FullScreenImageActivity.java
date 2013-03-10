@@ -14,7 +14,7 @@ import android.os.Bundle;
  * @author Marie
  * 
  */
-public class FullScreenImageActivity extends BaseActivity {
+public class FullScreenImageActivity extends BaseConsultationActivity {
 
 	/**
 	 * Get the mediaId from the intent and load the corresponding image
