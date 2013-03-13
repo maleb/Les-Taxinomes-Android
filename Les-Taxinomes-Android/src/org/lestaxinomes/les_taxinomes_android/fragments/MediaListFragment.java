@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.lestaxinomes.les_taxinomes_android.R;
 import org.lestaxinomes.les_taxinomes_android.activities.BaseActivity;
+import org.lestaxinomes.les_taxinomes_android.activities.BaseConsultationActivity;
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableMediaListView;
@@ -19,6 +20,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * Fragment displaying the media list
+ * Displayed in its own Activity if portrait.
+ * Displayed at the left of the MediaFragment if landscape (in the ConsultationActivty).
+ * @author Marie
+ *
+ */
 public class MediaListFragment extends BaseListFragment {
 
 	boolean mDualPane;
@@ -77,11 +85,7 @@ public class MediaListFragment extends BaseListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		
-		//Toast.makeText(getActivity(), "onListItemClick", Toast.LENGTH_LONG).show();
-
 		showDetails(position);
-
 	}
 
 	void showDetails(int index) {
@@ -128,7 +132,12 @@ public class MediaListFragment extends BaseListFragment {
 		}
 	}
 
-	public static class MediaActivity extends BaseActivity {
+	/**
+	 * Used for the MediaFragment if portrait
+	 * @author Marie
+	 *
+	 */
+	public static class MediaActivity extends BaseConsultationActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {

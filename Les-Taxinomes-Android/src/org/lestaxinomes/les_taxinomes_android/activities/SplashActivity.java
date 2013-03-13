@@ -9,6 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+/**
+ * Displays a picture during 1 second at each launch of the application
+ * 
+ * @author Marie
+ * 
+ */
 public class SplashActivity extends Activity {
 	private static final int STOPSPLASH = 0;
 

@@ -4,7 +4,11 @@ import org.lestaxinomes.les_taxinomes_android.utils.ImageViewLoading;
 
 import android.graphics.Bitmap;
 import android.widget.ImageView;
-
+/**
+ * Loads the image from the url
+ * @author Marie
+ *
+ */
 public class UpdatableImageView implements UpdatableView{
 
 	private ImageView imageView;

@@ -1,5 +1,8 @@
 package org.lestaxinomes.les_taxinomes_android.entities;
-
+/**
+ * the entity Licence
+ * @author Marie
+ */
 public class Licence {
 
 	private Integer id;

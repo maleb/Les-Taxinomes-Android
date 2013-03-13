@@ -10,17 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Fragment displaying the details of a media (get the mediaId from the intent or the arguments).
+ * Displayed in its own Activity if portrait.
+ * Displayed at the right of the Media List Fragment if landscape (in the ConsultationActivty).
+ * @author Marie
+ *
+ */
 public class MediaFragment extends BaseFragment {
 
 	public static MediaFragment newInstance(int index, int mediaId) {
 		MediaFragment f = new MediaFragment();
-
-		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt("index", index);
 		args.putInt("mediaId", mediaId);
 		f.setArguments(args);
-
 		return f;
 	}
 
@@ -38,6 +42,7 @@ public class MediaFragment extends BaseFragment {
 
 		Intent intent = getActivity().getIntent();
 
+		//mediaId is in the arguments if landscape
 		if (this.getArguments() != null) {
 			if (this.getArguments().get("mediaId") != null
 					&& this.getArguments().get("mediaId").toString() != "") {
@@ -45,6 +50,8 @@ public class MediaFragment extends BaseFragment {
 						.toString());
 			}
 		}
+		
+		//mediaId is in the Intent if portrait (MediaFragment has its own Activity)
 		if (intent.getStringExtra("mediaId") != null) {
 			mediaId = Integer.parseInt(intent.getStringExtra("mediaId"));
 		}

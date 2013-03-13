@@ -10,7 +10,11 @@ import org.lestaxinomes.les_taxinomes_android.views.UpdatableImageView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-
+/**
+ * Loads an image (from an url) in an asynchronous way
+ * @author Marie
+ *
+ */
 public class ImageViewLoading extends
 		AsyncTask<UpdatableImageView, UpdatableImageView, UpdatableImageView> {
 

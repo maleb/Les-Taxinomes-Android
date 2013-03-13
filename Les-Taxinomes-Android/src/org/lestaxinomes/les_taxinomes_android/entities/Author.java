@@ -1,10 +1,17 @@
 package org.lestaxinomes.les_taxinomes_android.entities;
-
+/**
+ * the entity Author
+ * @author Marie
+ */
 public class Author {
 
 	private Integer id;
 	private String name;
-	private String logoUrl;
+	private String avatarUrl;
+	
+	/**
+	 * used if this author represents the loggued user
+	 */
 	private String login;
 	private String password;
 
@@ -40,12 +47,12 @@ public class Author {
 		this.id = id;
 	}
 
-	public String getLogoUrl() {
-		return logoUrl;
+	public String getAvatarUrl() {
+		return avatarUrl;
 	}
 
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
+	public void setAvatarUrl(String url) {
+		this.avatarUrl = url;
 	}
 
 }

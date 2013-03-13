@@ -2,7 +2,11 @@ package org.lestaxinomes.les_taxinomes_android.model;
 
 import org.lestaxinomes.les_taxinomes_android.entities.Author;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
-
+/**
+ * Model for authentification
+ * @author Marie
+ *
+ */
 public class UserModel extends Model {
 	
 	private Author author;

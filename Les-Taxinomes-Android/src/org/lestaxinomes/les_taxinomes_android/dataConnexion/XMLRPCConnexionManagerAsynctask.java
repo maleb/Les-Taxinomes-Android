@@ -1,10 +1,7 @@
 package org.lestaxinomes.les_taxinomes_android.dataConnexion;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,47 +19,153 @@ import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.model.AuthorModel;
 import org.lestaxinomes.les_taxinomes_android.model.CreateMediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.LicenceModel;
+import org.lestaxinomes.les_taxinomes_android.model.MediaFullDocumentModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaListModel;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
 import org.lestaxinomes.les_taxinomes_android.model.Model;
 import org.lestaxinomes.les_taxinomes_android.model.UserModel;
-import org.lestaxinomes.les_taxinomes_android.utils.Base64;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Base64;
 import de.timroes.axmlrpc.XMLRPCClient;
-import de.timroes.axmlrpc.XMLRPCException;
-import de.timroes.axmlrpc.XMLRPCServerException;
 
+/**
+ * Connects to the SPIP database using XML-RPC in an asynchrone way
+ * 
+ * @author Marie
+ * 
+ */
 public class XMLRPCConnexionManagerAsynctask extends
 		AsyncTask<Model, Integer, Model> {
 
-	// real site
-	 private static final String serverURL =
-	 "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
+	/**
+	 * the production website URL
+	 */
+	private static final String serverURL = "http://www.lestaxinomes.org/spip.php?action=xmlrpc_serveur";
 
-	// test site
-//	private static final String serverURL = "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
+	// /**
+	// * the test website URL
+	// */
+	// private static final String serverURL =
+	// "http://taxinomes.arscenic.org/spip.php?action=xmlrpc_serveur";
 
-	private static Object XMLRPCCall(String fonction, Object criteres) {
+	/**
+	 * Generic way for making a call
+	 * 
+	 * @param fonction
+	 *            the method to call
+	 * @param criteres
+	 *            the arguments for the method
+	 * @param login
+	 *            if possible the login of the user
+	 * @param password
+	 *            if possible the password of the user
+	 * @return the response of the server (as an Object)
+	 */
+	private static Object XMLRPCCall(String fonction, Object criteres,
+			String login, String password) {
 		Object res = null;
 		try {
 			XMLRPCClient client = new XMLRPCClient(new URL(serverURL));
 
+			if (login != null && password != null) {
+				client.setLoginData(login, password);
+			}
+
 			res = client.call(fonction, criteres);
 
-		} catch (XMLRPCServerException ex) {
-			// The server throw an error.
-			ex.printStackTrace();
-		} catch (XMLRPCException ex) {
-			// An error occured in the client.
-			ex.printStackTrace();
 		} catch (Exception ex) {
-			// Any other exception
 			ex.printStackTrace();
 		}
 		return res;
 	}
 
+	/**
+	 * Uses the response of the server for updating the views
+	 */
+	@Override
+	protected void onPostExecute(Model model) {
+		model.update();
+
+		if (model instanceof MediaModel) {
+
+			AsyncTask<Model, Integer, Model> authorAT = new XMLRPCConnexionManagerAsynctask();
+			authorAT.execute(((MediaModel) model).getAuthorModel());
+		} else if (model instanceof CreateMediaModel) {
+			File fi = new File(Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/tmpTaxinomes");
+			fi.delete();
+		}
+
+	}
+
+	/**
+	 * Call the right method depending on the Model asking
+	 */
+	@Override
+	protected Model doInBackground(Model... models) {
+		Model res = null;
+		if (models != null) {
+			Model[] mods = models.clone();
+			Model mod = mods[0];
+			if (mod instanceof MediaModel) {
+				((MediaModel) mod).setMedia(readMedia(((MediaModel) mod)));
+				res = mod;
+			}
+
+			else if (mod instanceof MediaFullDocumentModel) {
+				((MediaFullDocumentModel) mod)
+						.setMedia(loadMediaFullDocument(((MediaFullDocumentModel) mod)));
+				res = mod;
+			}
+
+			else if (mod instanceof CreateMediaModel) {
+				((CreateMediaModel) mod)
+						.setMedia(createMedia(((CreateMediaModel) mod)));
+				res = mod;
+			}
+
+			else if (mod instanceof MediaListModel) {
+				((MediaListModel) mod)
+						.setMediaList(getMediaListByCriteria(((MediaListModel) mod)
+								.getCriteres()));
+				res = mod;
+
+			} else if (mod instanceof AuthorModel) {
+				Author loadedAuthor = getAuthorById(((AuthorModel) mod)
+						.getAuthor().getId());
+				((AuthorModel) mod).setAuthor(loadedAuthor);
+				res = mod;
+
+			} else if (mod instanceof UserModel) {
+				Author loadedAuthor = loadAuthorIfSucessfulAuthentification(
+						((UserModel) mod).getLogin(),
+						((UserModel) mod).getPassword());
+				((UserModel) mod).setAuthor(loadedAuthor);
+				res = mod;
+
+			} else if (mod instanceof LicenceModel) {
+				((LicenceModel) mod).setLicences(loadLicences());
+				res = mod;
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Transforms the response of the server in an object Media
+	 * 
+	 * @param callResult
+	 *            the response received from the server
+	 * @param mm
+	 *            if pertinent : the mediaModel which will receive the loaded
+	 *            author
+	 * @return the Media
+	 */
 	private Media loadMediaFromCallResult(Map<String, Object> callResult,
 			MediaModel mm) {
 		Media media = new Media();
@@ -83,6 +186,7 @@ public class XMLRPCConnexionManagerAsynctask extends
 						.get("id_licence")));
 			}
 
+			// date
 			Date modifDate = null;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat(
@@ -90,10 +194,10 @@ public class XMLRPCConnexionManagerAsynctask extends
 				modifDate = sdf.parse((String) callResult.get("date_modif"));
 				media.setModificationDate(modifDate);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
+			// geolocalisation
 			Object[] gisArray = (Object[]) callResult.get("gis");
 			if (gisArray != null) {
 				for (Object a : gisArray) {
@@ -109,18 +213,14 @@ public class XMLRPCConnexionManagerAsynctask extends
 				}
 			}
 
+			// authors
 			List<Author> authors = new ArrayList<Author>();
-
 			Object[] auteurs = (Object[]) callResult.get("auteurs");
 			if (auteurs != null) {
 				for (Object a : auteurs) {
 					Map<String, Object> mapAuthor = (Map<String, Object>) a;
 					Author author = new Author();
 
-					// for (Entry<String, Object> i : mapAuthor.entrySet()) {
-					// System.out.println(i.getKey() + " : "
-					// + i.getValue().toString());
-					// }
 					author.setId(Integer.parseInt((String) mapAuthor
 							.get("id_auteur")));
 					author.setName((String) mapAuthor.get("nom"));
@@ -130,24 +230,23 @@ public class XMLRPCConnexionManagerAsynctask extends
 					if (mm != null) {
 						mm.getAuthorModel().setAuthor(author);
 
-						// (new XMLRPCConnexionManager()).loadAuthor(mm
-						// .getAuthorModel());
-						//
-						// authors.add(mm.getAuthorModel().getAuthor());
 					}
-					//
-					// System.out.println( "idAuteur="+mapAuthor.get("id"));
-					// System.out.println( "nomAuteur="+mapAuthor.get("nom"));
 				}
 			}
 			media.setAuthors(authors);
-			// Map<String,Object>callResult.get("auteurs");
-			// media.setAuthor(author);
 		}
 		return media;
 
 	}
 
+	/**
+	 * Create a new media in the database with the media data from the
+	 * CreateMediaModel
+	 * 
+	 * @param cmm
+	 *            the createMediaModel containing the media to create
+	 * @return the created Media (with the ID given by the database)
+	 */
 	private Media createMedia(CreateMediaModel cmm) {
 
 		Map<String, Object> criteres = new HashMap<String, Object>();
@@ -161,12 +260,11 @@ public class XMLRPCConnexionManagerAsynctask extends
 		if (cmm.getMedia().getGis() != null) {
 
 			Map<String, Object> gis = new HashMap<String, Object>();
-			gis.put("lat",
-					Float.toString(cmm.getMedia().getGis().getLatitude()
-							.floatValue()));
-			gis.put("lon",
-					Float.toString(cmm.getMedia().getGis().getLongitude()
-							.floatValue()));
+			Double latitude = cmm.getMedia().getGis().getLatitude();
+			Double longitude = cmm.getMedia().getGis().getLongitude();
+
+			gis.put("lat", Float.toString(latitude.floatValue()));
+			gis.put("lon", Float.toString(longitude.floatValue()));
 			criteres.put("gis", gis);
 		}
 
@@ -174,43 +272,82 @@ public class XMLRPCConnexionManagerAsynctask extends
 		doc.put("name", cmm.getMedia().getTitre() + ".jpg");
 		doc.put("type", "image/jpeg");
 
+		// Encode image in base64 - reduced size for not having Out of memory
+		// errors
 		String encodedImage = null;
 		try {
 
-			encodedImage = Base64.encodeFromFile(cmm.getLocalMediaUri());
+			Options options = new BitmapFactory.Options();
+			options.inSampleSize = 2;
+			Bitmap bm = BitmapFactory.decodeFile(cmm.getLocalMediaUri(),
+					options);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			bm.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+			byte[] b = baos.toByteArray();
+			encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
-
 		doc.put("bits", encodedImage);
 
 		criteres.put("document", doc);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"geodiv.creer_media", criteres);
+				"geodiv.creer_media", criteres, cmm.getLogin(),
+				cmm.getPassword());
 		return loadMediaFromCallResult(callResult, null);
 
 	}
 
+	/**
+	 * Get the media from the database, with its document in full size
+	 * 
+	 * @param mm
+	 *            the MediaFullDocumentModel containing the media with an id
+	 * @return the Media
+	 */
+	@SuppressWarnings("unchecked")
+	private Media loadMediaFullDocument(MediaFullDocumentModel mm) {
+		Map<String, Integer> criteres = new HashMap<String, Integer>();
+		criteres.put("id_article", mm.getMedia().getId());
+
+		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
+				"geodiv.lire_media", criteres, null, null);
+		return loadMediaFromCallResult(callResult, null);
+
+	}
+
+	/**
+	 * Get the media from the database, with its document in size 600
+	 * 
+	 * @param mm
+	 *            the MediaModel containing the media with an id
+	 * @return the Media
+	 */
 	@SuppressWarnings("unchecked")
 	private Media readMedia(MediaModel mm) {
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_article", mm.getMedia().getId());
-		//criteres.put("vignette_largeur", 400);
-		// WindowManager wm = (WindowManager)
-		// .getSystemService(Context.WINDOW_SERVICE);
-		// Display display = wm.getDefaultDisplay();
+		criteres.put("document_largeur", 600);
 
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"geodiv.lire_media", criteres);
+				"geodiv.lire_media", criteres, null, null);
 		return loadMediaFromCallResult(callResult, mm);
 
 	}
 
+	/**
+	 * Get the list of the medias from the database respecting the criterias
+	 * 
+	 * @param criteria
+	 *            the map of criteria
+	 * @return the list of medias
+	 */
 	@SuppressWarnings("unchecked")
 	private List<Media> getMediaListByCriteria(Map<String, String> criteria) {
-		Object b = XMLRPCCall("geodiv.liste_medias", criteria);
+		Object b = XMLRPCCall("geodiv.liste_medias", criteria, null, null);
 		Object[] c = (Object[]) b;
 		List<Media> listMedia = new ArrayList<Media>();
 		if (c != null) {
@@ -224,79 +361,15 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 	}
 
-	public void loadMedia(MediaModel mm) {
-		// loading the media information (for author : only the id and name)
-		this.execute(mm);
-
-	}
-
-	@Override
-	protected void onPostExecute(Model model) {
-		model.update();
-
-		if (model instanceof MediaModel) {
-
-			AsyncTask<Model, Integer, Model> authorAT = new XMLRPCConnexionManagerAsynctask();
-			authorAT.execute(((MediaModel) model).getAuthorModel());
-		}
-
-	}
-
-	@Override
-	protected Model doInBackground(Model... models) {
-		Model res = null;
-		if (models != null) {
-			Model[] mods = models.clone();
-			Model mod = mods[0];
-			if (mod instanceof MediaModel) {
-
-				((MediaModel) mod).setMedia(readMedia(((MediaModel) mod)));
-				res = mod;
-
-			}
-
-			else if (mod instanceof CreateMediaModel) {
-				((CreateMediaModel) mod)
-						.setMedia(createMedia(((CreateMediaModel) mod)));
-
-				res = mod;
-
-			}
-
-			else if (mod instanceof MediaListModel) {
-
-				((MediaListModel) mod)
-						.setMediaList(getMediaListByCriteria(((MediaListModel) mod)
-								.getCriteres()));
-				res = mod;
-			} else if (mod instanceof AuthorModel) {
-
-				Author loadedAuthor = getAuthorById(((AuthorModel) mod)
-						.getAuthor().getId());
-
-				((AuthorModel) mod).setAuthor(loadedAuthor);
-				res = mod;
-			} else if (mod instanceof UserModel) {
-
-				Author loadedAuthor = loadAuthorIfSucessfulAuthentification(
-						((UserModel) mod).getLogin(),
-						((UserModel) mod).getPassword());
-
-				((UserModel) mod).setAuthor(loadedAuthor);
-				res = mod;
-			} else if (mod instanceof LicenceModel) {
-
-				((LicenceModel) mod).setLicences(loadLicences());
-
-				res = mod;
-			}
-		}
-		return res;
-	}
-
+	/**
+	 * Read the license list from the database
+	 * 
+	 * @return the license list
+	 */
 	private List<Licence> loadLicences() {
 		HashMap<String, Object> b = (HashMap<String, Object>) XMLRPCCall(
-				"spip.liste_licences", new HashMap<String, Object>());
+				"spip.liste_licences", new HashMap<String, Object>(), null,
+				null);
 
 		List<Licence> list = new ArrayList<Licence>();
 
@@ -330,13 +403,23 @@ public class XMLRPCConnexionManagerAsynctask extends
 		return list;
 	}
 
+	/**
+	 * Try to connect with login/password, if successful return the data of the
+	 * logged author, or return null
+	 * 
+	 * @param login
+	 *            the login of the user
+	 * @param password
+	 *            the password of the user
+	 * @return the Author if succesfully authenticate, or null
+	 */
 	private Author loadAuthorIfSucessfulAuthentification(String login,
 			String password) {
 		String[] array = new String[2];
 		array[0] = login;
 		array[1] = password;
 
-		Object res = XMLRPCCall("spip.auth", array);
+		Object res = XMLRPCCall("spip.auth", array, null, null);
 
 		if (res instanceof Boolean) {
 			if (!(Boolean) res) {
@@ -356,39 +439,40 @@ public class XMLRPCConnexionManagerAsynctask extends
 
 	}
 
+	/**
+	 * get the Author from the database by its id
+	 * 
+	 * @param id
+	 *            the authorId
+	 * @return the Author
+	 */
 	private Author getAuthorById(Integer id) {
 		Map<String, Integer> criteres = new HashMap<String, Integer>();
 		criteres.put("id_auteur", id);
-		// WindowManager wm = (WindowManager)
-		// .getSystemService(Context.WINDOW_SERVICE);
-		// Display display = wm.getDefaultDisplay();
 
 		@SuppressWarnings("unchecked")
 		HashMap<String, Object> callResult = (HashMap<String, Object>) XMLRPCCall(
-				"spip.lire_auteur", criteres);
+				"spip.lire_auteur", criteres, null, null);
 		return createAuthorFromCallResult(callResult);
 	}
 
+	/**
+	 * Transforms the response of the server in an object Author
+	 * 
+	 * @param callResult
+	 *            th response from the server
+	 * @return the Author
+	 */
 	private Author createAuthorFromCallResult(Map<String, Object> callResult) {
 		Author author = new Author();
 
 		if (callResult != null) {
 			author.setId(Integer.parseInt((String) callResult.get("id_auteur")));
 			author.setName((String) callResult.get("nom"));
-			author.setLogoUrl((String) callResult.get("logo"));
+			author.setAvatarUrl((String) callResult.get("logo"));
 
 		}
 		return author;
-
-	}
-
-	public void loadMediaList(MediaListModel mediaListModel) {
-		this.execute(mediaListModel);
-
-	}
-
-	public void loadAuthor(AuthorModel authorModel) {
-		this.execute(authorModel);
 
 	}
 

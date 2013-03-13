@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.lestaxinomes.les_taxinomes_android.entities.Licence;
 import org.lestaxinomes.les_taxinomes_android.views.UpdatableView;
-
+/**
+ * Model for the license list
+ * @author Marie
+ *
+ */
 public class LicenceModel extends Model {
 	
 	private List<Licence> licences;

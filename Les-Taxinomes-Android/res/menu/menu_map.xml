@@ -2,19 +2,36 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/medialist"
-        android:icon="@drawable/media30x30_gold"
-        android:showAsAction="ifRoom"
-        android:title="@string/medialist"/>
-    <item
         android:id="@+id/map_loadmore"
         android:icon="@drawable/rafraichir20x20_blanc"
         android:showAsAction="ifRoom"
         android:title="@string/map_loadmore"/>
     <item
+        android:id="@+id/center_to_current_location"
+        android:icon="@drawable/carte30x30_blanc"
+        android:showAsAction="ifRoom"
+        android:title="@string/center_to_current_location"/>
+    
+     <item
         android:id="@+id/takephoto"
         android:icon="@drawable/app_photo30x30"
         android:showAsAction="always"
         android:title="@string/takephoto"/>
+    <item
+        android:id="@+id/medialist"
+        android:icon="@drawable/media30x30_gold"
+        android:showAsAction="always"
+        android:title="@string/medialist"/>
+   
+    <item
+        android:id="@+id/map_filter"
+        android:icon="@drawable/carte30x30_gold"
+        android:showAsAction="always"
+        android:title="@string/map_filter"/>
+    <item
+        android:id="@+id/my_account"
+        android:icon="@drawable/monespace30x30_gold"
+        android:showAsAction="always"
+        android:title="@string/my_account"/>
 
 </menu>

@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-     <item
-        android:id="@+id/medialist"
-        android:showAsAction="always"
-        android:title="@string/medialist"
-        android:icon="@drawable/media30x30_gold"
-        />
-     
-       <item
-        android:id="@+id/takephoto"
-        android:showAsAction="always"
-        android:title="@string/takephoto"
-        android:icon="@drawable/app_photo30x30"
-        />
 
     <item
+        android:id="@+id/takephoto"
+        android:icon="@drawable/app_photo30x30"
+        android:showAsAction="always"
+        android:title="@string/takephoto"/>
+    <item
+        android:id="@+id/medialist"
+        android:icon="@drawable/media30x30_gold"
+        android:showAsAction="always"
+        android:title="@string/medialist"/>
+    <item
         android:id="@+id/map_filter"
+        android:icon="@drawable/carte30x30_gold"
         android:showAsAction="always"
-        android:title="@string/map_filter"
-        android:icon="@drawable/carte30x30_gold"/>
-    
-      <item
+        android:title="@string/map_filter"/>
+    <item
         android:id="@+id/my_account"
+        android:icon="@drawable/monespace30x30_gold"
         android:showAsAction="always"
-        android:title="@string/my_account"
-        android:icon="@drawable/monespace30x30_gold"/>
-      
-       <!-- <item
+        android:title="@string/my_account"/>
+
+    <!--
+        <item
         android:id="@+id/image_pick"
         android:showAsAction="always"
-        android:title="Photo"/> -->
+        android:title="Photo"/>
+    -->
 
 </menu>

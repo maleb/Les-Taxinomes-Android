@@ -15,15 +15,26 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import android.app.Activity;
 import android.content.Intent;
-
+/**
+ * Utilities for map and location
+ * @author Marie
+ *
+ */
 public class GISUtils {
-
+/**
+ * remove all the Points Of Interest from the mapView
+ * @param mapView the mapView from which remove the Points Of Interest
+ */
 	public static void removePOIs(final MapView mapView) {
 
 		mapView.getOverlayManager().clear();
 
 	}
-
+/**
+ * add Points Of Interest for each media of the list, on the mapView
+ * @param mediaList medias to display on the mapView
+ * @param mapView
+ */
 	public static void setMediaListOnMapView(List<Media> mediaList,
 			final MapView mapView) {
 

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.lestaxinomes.les_taxinomes_android.R;
+import org.lestaxinomes.les_taxinomes_android.activities.FullScreenImageActivity;
 import org.lestaxinomes.les_taxinomes_android.activities.MapActivity;
 import org.lestaxinomes.les_taxinomes_android.entities.Media;
 import org.lestaxinomes.les_taxinomes_android.model.MediaModel;
@@ -13,14 +14,17 @@ import org.lestaxinomes.les_taxinomes_android.utils.GISUtils;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+/**
+ * Displays the Detail of a media
+ * @author Marie
+ *
+ */
 public class UpdatableMediaView implements UpdatableView {
 
 	private MediaModel mediaModel;
@@ -69,6 +73,20 @@ public class UpdatableMediaView implements UpdatableView {
 
 	@Override
 	public void update() {
+		this.imageView.loadImage(mediaModel.getMedia().getImageUrl());
+
+		this.imageView.getImageView().setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				final Intent intent = new Intent(mapView.getContext(),
+						FullScreenImageActivity.class);
+				
+				
+				intent.putExtra("mediaId", mediaModel.getMedia().getId().toString());
+				((Activity) mapView.getContext()).startActivity(intent);
+
+			}
+		});
 		titleView.setText(mediaModel.getMedia().getTitre());
 		descriptionView.setText(mediaModel.getMedia().getDescription());
 
@@ -94,21 +112,12 @@ public class UpdatableMediaView implements UpdatableView {
 					.getGis().getLatitude(), mediaModel.getMedia().getGis()
 					.getLongitude());
 
+
 			mapView.getController().setCenter(mediaLocalisation);
 
 			List<Media> mediaList = new ArrayList<Media>();
 			mediaList.add(mediaModel.getMedia());
 			GISUtils.setMediaListOnMapView(mediaList, mapView);
-
-			// XmlPullParser parser =
-			// this.mapView.getContext().getResources().getXml(R.id.mediaMapView);
-			// AttributeSet attributes = Xml.asAttributeSet(parser);
-
-			// GISUtils.addPOI(mapView,
-			// mediaModel.getMedia().getId().toString(),
-			// mediaModel.getMedia().getTitre(), mediaModel
-			// .getMedia().getDescription(), mediaModel.getMedia().getGis()
-			// .getLatitude(), mediaModel.getMedia().getGis().getLongitude());
 
 			mapView.setOnClickListener(new OnClickListener() {
 
@@ -126,11 +135,8 @@ public class UpdatableMediaView implements UpdatableView {
 				}
 			});
 
-			// changing the width to full size
-			android.view.ViewGroup.LayoutParams params = this.mapView
-					.getLayoutParams();
-			params.width = LayoutParams.MATCH_PARENT;
-			this.mapView.setLayoutParams(params);
+
+			mapView.setVisibility(View.VISIBLE);
 			// reload view
 			this.mapView.invalidate();
 		}
@@ -139,9 +145,8 @@ public class UpdatableMediaView implements UpdatableView {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dateString = sdf.format(modifDate);
 		dateView.setText("le " + dateString);
-		this.imageView.loadImage(mediaModel.getMedia().getImageUrl());
+
 		this.authorView.update();
 
 	}
-
 }

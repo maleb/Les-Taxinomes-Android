@@ -3,12 +3,24 @@ package org.lestaxinomes.les_taxinomes_android.entities;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * the entity Media
+ * @author Marie
+ */
 public class Media {
 
 	private Integer id;
 	private String titre;
 	private String description;
+	
+	/**
+	 * the document url
+	 */
 	private String imageUrl;
+	
+	/**
+	 * the thumbnail url
+	 */
 	private String vignetteUrl;
 	private List<Author> authors;
 	private Date modificationDate;

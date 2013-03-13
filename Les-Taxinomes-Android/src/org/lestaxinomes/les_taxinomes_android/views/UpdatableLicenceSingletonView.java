@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.lestaxinomes.les_taxinomes_android.entities.Licence;
 import org.lestaxinomes.les_taxinomes_android.model.LicenceModel;
-
+/**
+ * Loads the license list the first time it is asked, give it again the next times (without reload).
+ * @author Marie
+ *
+ */
 public class UpdatableLicenceSingletonView implements UpdatableView {
 
 	/** L'instance statique */
